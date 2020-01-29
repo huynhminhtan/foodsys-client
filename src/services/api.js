@@ -16,4 +16,6 @@ export default {
   queryPostList: '/posts',
 
   queryDashboard: '/dashboard',
+
+  queryReservationList: 'http://localhost:8080/reservation/all',
 }

@@ -23,12 +23,16 @@ import {
   Select,
   Result,
 } from 'antd'
+import { connect } from 'dva'
+import PropTypes from 'prop-types'
+import User from '../user'
 
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 const SelectOption = Select.Option
 const { Search, TextArea } = Input
 
+@connect(({ reservation, loading }) => ({ reservation, loading }))
 class Reservation extends React.Component {
   constructor(props) {
     super(props)
@@ -42,6 +46,9 @@ class Reservation extends React.Component {
   }
 
   render() {
+    const { dispatch, reservation, loading } = this.props
+    const { list, pagination, selectedRowKeys } = reservation
+
     const Info = ({ title, value, bordered }) => (
       <div className={styles.headerInfo}>
         <span>{title}</span>
@@ -66,13 +73,13 @@ class Reservation extends React.Component {
     const extraContent = (
       <div className={styles.extraContent}>
         <RadioGroup defaultValue="all">
-          <RadioButton value="all">全部</RadioButton>
-          <RadioButton value="progress">进行中</RadioButton>
-          <RadioButton value="waiting">等待中</RadioButton>
+          <RadioButton value="all">All</RadioButton>
+          <RadioButton value="waiting">Waiting</RadioButton>
+          <RadioButton value="confirmed">Confirmed</RadioButton>
         </RadioGroup>
         <Search
           className={styles.extraContentSearch}
-          placeholder="请输入"
+          placeholder="Search username"
           onSearch={() => ({})}
         />
       </div>
@@ -85,23 +92,40 @@ class Reservation extends React.Component {
       total: 50,
     }
 
-    const ListContent = ({ data: { owner, createdAt, percent, status } }) => (
+    const ListContent = ({
+      data: {
+        userName,
+        createdAt,
+        percent,
+        status,
+        number,
+        isConfirmed,
+        userNameMessenger,
+      },
+    }) => (
       <div className={styles.listContent}>
         <div className={styles.listContentItem}>
-          <span>Owner</span>
-          <p>{owner}</p>
+          <span>Number of seats</span>
+          <p>{number}</p>
         </div>
+
         <div className={styles.listContentItem}>
-          <span>开始时间</span>
-          <p>{moment(createdAt).format('YYYY-MM-DD HH:mm')}</p>
+          <span>Booking Time</span>
+          <p>{moment(parseInt(createdAt) * 1000).format('DD/MM/YYYY HH:mm')}</p>
         </div>
+
+        <div className={styles.listContentItem}>
+          <span>User Messenger</span>
+          <p>{userNameMessenger}</p>
+        </div>
+
         <div className={styles.listContentItem}>
           <Progress
-            percent={percent}
+            percent={parseInt(isConfirmed) * 100}
             status={status}
             strokeWidth={6}
             style={{
-              width: 180,
+              width: 120,
             }}
           />
         </div>
@@ -112,13 +136,13 @@ class Reservation extends React.Component {
       <Dropdown
         overlay={
           <Menu onClick={({ key }) => editAndDelete(key, item)}>
-            <Menu.Item key="edit">编辑</Menu.Item>
-            <Menu.Item key="delete">删除</Menu.Item>
+            <Menu.Item key="edit">Edit</Menu.Item>
+            <Menu.Item key="delete">Delete</Menu.Item>
           </Menu>
         }
       >
         <a>
-          更多 <DownOutlined />
+          More <DownOutlined />
         </a>
       </Dropdown>
     )
@@ -129,13 +153,13 @@ class Reservation extends React.Component {
         <Card bordered={false}>
           <Row>
             <Col sm={8} xs={24}>
-              <Info title="我的待办" value="8个任务" bordered />
+              <Info title="Waiting Status" value="8 reservation" bordered />
             </Col>
             <Col sm={8} xs={24}>
-              <Info title="本周任务平均处理时间" value="32分钟" bordered />
+              <Info title="Total reservation" value="32 reservation" bordered />
             </Col>
             <Col sm={8} xs={24}>
-              <Info title="本周完成任务数" value="24个任务" />
+              <Info title="Confirmed" value="24 reservation" />
             </Col>
           </Row>
         </Card>
@@ -143,7 +167,7 @@ class Reservation extends React.Component {
         <Card
           className={styles.listCard}
           bordered={false}
-          title="基本列表"
+          title="Reservation List"
           style={{
             marginTop: 24,
           }}
@@ -168,17 +192,22 @@ class Reservation extends React.Component {
                       this.showEditModal(item)
                     }}
                   >
-                    编辑
+                    Confirm
                   </a>,
                   <MoreBtn key="more" item={item} />,
                 ]}
               >
                 <List.Item.Meta
                   avatar={
-                    <Avatar src={item.logo} shape="square" size="large" />
+                    <Avatar src={item.avatar} shape="square" size="large" />
                   }
-                  title={<a href={item.href}>{item.title}</a>}
-                  description={item.subDescription}
+                  title={
+                    <a>
+                      {item.userName} - {item.phone}
+                    </a>
+                  }
+                  description={item.options}
+                  className={styles.antListItemMeta}
                 />
                 <ListContent data={item} />
               </List.Item>
@@ -188,6 +217,13 @@ class Reservation extends React.Component {
       </div>
     )
   }
+}
+
+Reservation.propTypes = {
+  reservation: PropTypes.object,
+  location: PropTypes.object,
+  dispatch: PropTypes.func,
+  loading: PropTypes.object,
 }
 
 export default Reservation

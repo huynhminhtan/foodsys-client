@@ -88,6 +88,11 @@ class List extends PureComponent {
         title: <Trans>UpdatedAt</Trans>,
         dataIndex: 'updatedAt',
         key: 'updatedAt',
+        render: text => (
+          <span>
+            {moment(parseInt(text) * 1000).format('DD/MM/YYYY HH:mm:ss')}
+          </span>
+        ),
       },
       {
         title: <Trans>Operation</Trans>,
