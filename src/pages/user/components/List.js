@@ -5,6 +5,7 @@ import { DropOption } from 'components'
 import { Trans, withI18n } from '@lingui/react'
 import Link from 'umi/link'
 import styles from './List.less'
+import moment from 'moment'
 
 const { confirm } = Modal
 
@@ -28,13 +29,22 @@ class List extends PureComponent {
   render() {
     const { onDeleteItem, onEditItem, i18n, ...tableProps } = this.props
 
+    console.log('oki-----' + JSON.stringify(tableProps.dataSource))
+
     const columns = [
+      {
+        title: <Trans>MessengerId</Trans>,
+        dataIndex: 'messengerId',
+        key: 'messengerId',
+        // fixed: 'left',
+        // width: 72,
+      },
       {
         title: <Trans>Avatar</Trans>,
         dataIndex: 'avatar',
         key: 'avatar',
-        width: 72,
-        fixed: 'left',
+        width: 82,
+        // fixed: 'left',
         render: text => <Avatar style={{ marginLeft: 8 }} src={text} />,
       },
       {
@@ -42,16 +52,6 @@ class List extends PureComponent {
         dataIndex: 'name',
         key: 'name',
         render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,
-      },
-      {
-        title: <Trans>NickName</Trans>,
-        dataIndex: 'nickName',
-        key: 'nickName',
-      },
-      {
-        title: <Trans>Age</Trans>,
-        dataIndex: 'age',
-        key: 'age',
       },
       {
         title: <Trans>Gender</Trans>,
@@ -70,14 +70,24 @@ class List extends PureComponent {
         key: 'email',
       },
       {
-        title: <Trans>Address</Trans>,
-        dataIndex: 'address',
-        key: 'address',
+        title: <Trans>Contact</Trans>,
+        dataIndex: 'contact',
+        key: 'contact',
       },
       {
-        title: <Trans>CreateTime</Trans>,
-        dataIndex: 'createTime',
-        key: 'createTime',
+        title: <Trans>CreatedAt</Trans>,
+        dataIndex: 'createdAt',
+        key: 'createdAt',
+        render: text => (
+          <span>
+            {moment(parseInt(text) * 1000).format('DD/MM/YYYY HH:mm:ss')}
+          </span>
+        ),
+      },
+      {
+        title: <Trans>UpdatedAt</Trans>,
+        dataIndex: 'updatedAt',
+        key: 'updatedAt',
       },
       {
         title: <Trans>Operation</Trans>,

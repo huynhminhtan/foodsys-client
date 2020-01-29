@@ -6,7 +6,8 @@ export default {
   loginUser: 'POST /user/login',
 
   queryUser: '/user/:id',
-  queryUserList: '/users',
+  // queryUserList: '/users',
+  queryUserList: 'http://localhost:8080/user/all',
   updateUser: 'Patch /user/:id',
   createUser: 'POST /user',
   removeUser: 'DELETE /user/:id',

@@ -38,15 +38,16 @@ export default modelExtend(pageModel, {
   effects: {
     *query({ payload = {} }, { call, put }) {
       const data = yield call(queryUserList, payload)
+      console.log('data: ' + JSON.stringify(data.list))
       if (data) {
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
+            list: data.list,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,
-              total: data.total,
+              total: 10,
             },
           },
         })
