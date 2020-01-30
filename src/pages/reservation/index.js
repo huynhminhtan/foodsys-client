@@ -5,6 +5,7 @@ import styles from './index.less'
 import moment from 'moment'
 import list from './datasource'
 import { DownOutlined, PlusOutlined } from '@ant-design/icons'
+import { Form } from '@ant-design/compatible'
 
 import {
   Avatar,
@@ -27,27 +28,96 @@ import { connect } from 'dva'
 import PropTypes from 'prop-types'
 import User from '../user'
 
+const FormItem = Form.Item
+
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 const SelectOption = Select.Option
 const { Search, TextArea } = Input
 
-@connect(({ reservation, loading }) => ({ reservation, loading }))
+// @connect(({ reservation, loading }) => ({ reservation, loading }))
 class Reservation extends React.Component {
   constructor(props) {
     super(props)
+
+    this.state = {
+      visible: false,
+      done: false,
+      current: undefined,
+    }
   }
 
+  formLayout = {
+    labelCol: {
+      span: 7,
+    },
+    wrapperCol: {
+      span: 13,
+    },
+  }
+
+  addBtn = undefined
+
   showEditModal = item => {
-    // this.setState({
-    //   visible: true,
-    //   current: item,
-    // });
+    this.setState({
+      visible: true,
+      current: item,
+    })
+  }
+
+  handleDone = () => {
+    setTimeout(() => this.addBtn && this.addBtn.blur(), 0)
+    this.setState({
+      done: false,
+      visible: false,
+    })
+  }
+
+  handleCancel = () => {
+    setTimeout(() => this.addBtn && this.addBtn.blur(), 0)
+    this.setState({
+      visible: false,
+    })
+  }
+
+  handleSubmit = e => {
+    e.preventDefault()
+    const { dispatch, form } = this.props
+    const { current } = this.state
+    const id = current ? current.id : ''
+    setTimeout(() => this.addBtn && this.addBtn.blur(), 0)
+    form.validateFields((err, fieldsValue) => {
+      if (err) return
+      this.setState({
+        done: true,
+      })
+      dispatch({
+        type: 'listBasicList/submit',
+        payload: {
+          id,
+          ...fieldsValue,
+        },
+      })
+    })
+  }
+
+  deleteItem = id => {
+    const { dispatch } = this.props
+    dispatch({
+      type: 'listBasicList/submit',
+      payload: {
+        id,
+      },
+    })
   }
 
   render() {
     const { dispatch, reservation, loading } = this.props
     const { list, pagination, selectedRowKeys } = reservation
+    const { visible, done, current = {} } = this.state
+    const {
+      form: { getFieldDecorator },
+    } = this.props
 
     const Info = ({ title, value, bordered }) => (
       <div className={styles.headerInfo}>
@@ -61,10 +131,10 @@ class Reservation extends React.Component {
       if (key === 'edit') this.showEditModal(currentItem)
       else if (key === 'delete') {
         Modal.confirm({
-          title: '删除任务',
-          content: '确定删除该任务吗？',
-          okText: '确认',
-          cancelText: '取消',
+          title: 'Delete Reservation',
+          content: 'Are you sure you want to delete this reservation？',
+          okText: 'Delete',
+          cancelText: 'Cancel',
           onOk: () => this.deleteItem(currentItem.id),
         })
       }
@@ -79,11 +149,22 @@ class Reservation extends React.Component {
         </RadioGroup>
         <Search
           className={styles.extraContentSearch}
-          placeholder="Search username"
+          placeholder="Search username, phone"
           onSearch={() => ({})}
         />
       </div>
     )
+
+    const modalFooter = done
+      ? {
+          footer: null,
+          onCancel: this.handleDone,
+        }
+      : {
+          okText: 'Edit',
+          onOk: this.handleSubmit,
+          onCancel: this.handleCancel,
+        }
 
     const paginationProps = {
       showSizeChanger: true,
@@ -147,73 +228,212 @@ class Reservation extends React.Component {
       </Dropdown>
     )
 
+    const getModalContent = () => {
+      if (done) {
+        return (
+          <Result
+            status="success"
+            title="Edit successful"
+            subTitle="Edit information for reservation successful."
+            extra={
+              <Button type="primary" onClick={this.handleDone}>
+                Yes
+              </Button>
+            }
+            className={styles.formResult}
+          />
+        )
+      }
+
+      return (
+        <Form onSubmit={this.handleSubmit}>
+          <FormItem label="User name reservation" {...this.formLayout}>
+            {getFieldDecorator('title', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Input name please!',
+                },
+              ],
+              initialValue: current.userName,
+            })(<Input placeholder="Input Name" />)}
+          </FormItem>
+          <FormItem label="Phone" {...this.formLayout}>
+            {getFieldDecorator('title', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Input phone please!',
+                },
+              ],
+              initialValue: current.phone,
+            })(<Input placeholder="Input Name" />)}
+          </FormItem>
+          <FormItem label="Number of seats" {...this.formLayout}>
+            {getFieldDecorator('title', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Input number please!',
+                },
+              ],
+              initialValue: current.number,
+            })(<Input placeholder="Input Name" />)}
+          </FormItem>
+          <FormItem label="Booking time" {...this.formLayout}>
+            {getFieldDecorator('createdAt', {
+              rules: [
+                {
+                  required: true,
+                  message: '',
+                },
+              ],
+              initialValue: current.createdAt
+                ? moment(parseInt(current.createdAt) * 1000)
+                : null,
+            })(
+              <DatePicker
+                showTime
+                placeholder="Input booking time"
+                format="YYYY-MM-DD HH:mm:ss"
+                style={{
+                  width: '100%',
+                }}
+              />
+            )}
+          </FormItem>
+          <FormItem label="Status reservation" {...this.formLayout}>
+            {getFieldDecorator('owner', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Input status reservation please!',
+                },
+              ],
+              initialValue: 'Confirmed',
+            })(
+              <Select placeholder="Confirmed">
+                <SelectOption value="confirmed">Confirmed</SelectOption>
+                <SelectOption value="waiting">Waiting</SelectOption>
+              </Select>
+            )}
+          </FormItem>
+          <FormItem {...this.formLayout} label="Options">
+            {getFieldDecorator('subDescription', {
+              rules: [
+                {
+                  message: 'Input options for reservation please！',
+                  min: 5,
+                },
+              ],
+              initialValue: current.options,
+            })(<TextArea rows={4} placeholder="Input options" />)}
+          </FormItem>
+        </Form>
+      )
+    }
+
     console.log('data=' + JSON.stringify(list))
     return (
-      <div className={styles.standardList}>
-        <Card bordered={false}>
-          <Row>
-            <Col sm={8} xs={24}>
-              <Info title="Waiting Status" value="8 reservation" bordered />
-            </Col>
-            <Col sm={8} xs={24}>
-              <Info title="Total reservation" value="32 reservation" bordered />
-            </Col>
-            <Col sm={8} xs={24}>
-              <Info title="Confirmed" value="24 reservation" />
-            </Col>
-          </Row>
-        </Card>
-
-        <Card
-          className={styles.listCard}
-          bordered={false}
-          title="Reservation List"
-          style={{
-            marginTop: 24,
-          }}
-          bodyStyle={{
-            padding: '0 32px 40px 32px',
-          }}
-          extra={extraContent}
-        >
-          <List
-            size="large"
-            rowKey="id"
-            // loading={loading}
-            pagination={paginationProps}
-            dataSource={list}
-            renderItem={item => (
-              <List.Item
-                actions={[
-                  <a
-                    key="edit"
-                    onClick={e => {
-                      e.preventDefault()
-                      this.showEditModal(item)
-                    }}
-                  >
-                    Confirm
-                  </a>,
-                  <MoreBtn key="more" item={item} />,
-                ]}
-              >
-                <List.Item.Meta
-                  avatar={
-                    <Avatar src={item.avatar} shape="square" size="large" />
-                  }
-                  title={
-                    <a>
-                      {item.userName} - {item.phone}
-                    </a>
-                  }
-                  description={item.options}
-                  className={styles.antListItemMeta}
+      <div>
+        <div className={styles.standardList}>
+          <Card bordered={false}>
+            <Row>
+              <Col sm={8} xs={24}>
+                <Info title="Waiting Status" value="8 reservation" bordered />
+              </Col>
+              <Col sm={8} xs={24}>
+                <Info
+                  title="Total reservation"
+                  value="32 reservation"
+                  bordered
                 />
-                <ListContent data={item} />
-              </List.Item>
-            )}
-          />
-        </Card>
+              </Col>
+              <Col sm={8} xs={24}>
+                <Info title="Confirmed" value="24 reservation" />
+              </Col>
+            </Row>
+          </Card>
+
+          <Card
+            className={styles.listCard}
+            bordered={false}
+            title="Reservation List"
+            style={{
+              marginTop: 24,
+            }}
+            bodyStyle={{
+              padding: '0 32px 40px 32px',
+            }}
+            extra={extraContent}
+          >
+            <List
+              size="large"
+              rowKey="id"
+              // loading={loading}
+              pagination={paginationProps}
+              dataSource={list}
+              renderItem={item => (
+                <List.Item
+                  actions={[
+                    <a
+                      key="edit"
+                      onClick={e => {
+                        e.preventDefault()
+                        // this.showEditModal(item)
+                        Modal.confirm({
+                          title: 'Confirm Reservation',
+                          content:
+                            'Are you sure you want to confirm this reservation?',
+                          okText: 'Confirm',
+                          cancelText: 'Cancel',
+                          // onOk: () => this.deleteItem(currentItem.id),
+                        })
+                      }}
+                    >
+                      Confirm
+                    </a>,
+                    <MoreBtn key="more" item={item} />,
+                  ]}
+                >
+                  <List.Item.Meta
+                    avatar={
+                      <Avatar src={item.avatar} shape="square" size="large" />
+                    }
+                    title={
+                      <a>
+                        {item.userName} - {item.phone}
+                      </a>
+                    }
+                    description={item.options}
+                    className={styles.antListItemMeta}
+                  />
+                  <ListContent data={item} />
+                </List.Item>
+              )}
+            />
+          </Card>
+        </div>
+
+        <Modal
+          title={done ? null : `Edit ${current ? 'Reservation' : 'More'}`}
+          className={styles.standardListForm}
+          width={640}
+          bodyStyle={
+            done
+              ? {
+                  padding: '72px 0',
+                }
+              : {
+                  padding: '28px 0 0',
+                }
+          }
+          destroyOnClose
+          visible={visible}
+          {...modalFooter}
+        >
+          {getModalContent()}
+        </Modal>
       </div>
     )
   }
@@ -226,4 +446,9 @@ Reservation.propTypes = {
   loading: PropTypes.object,
 }
 
-export default Reservation
+// export default Reservation
+// export default Reservation(Form.create()(Reservation));
+export default connect(({ reservation, loading }) => ({
+  reservation,
+  loading,
+}))(Form.create()(Reservation))
