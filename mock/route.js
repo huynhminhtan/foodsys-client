@@ -43,7 +43,7 @@ const database = [
   {
     id: '7',
     breadcrumbParentId: '1',
-    name: 'Posts',
+    name: 'Orders',
     zh: {
       name: '用户管理'
     },
@@ -51,7 +51,7 @@ const database = [
       name: 'Posts'
     },
     icon: 'shopping-cart',
-    route: '/post',
+    route: '/order',
   },
   {
     id: '21',
