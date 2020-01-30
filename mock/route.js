@@ -28,6 +28,19 @@ const database = [
     route: '/user',
   },
   {
+    id: '31',
+    breadcrumbParentId: '1',
+    name: 'Menu',
+    zh: {
+      name: 'Request'
+    },
+    'pt-br': {
+      name: 'Requisição'
+    },
+    icon: 'menu',
+    route: '/menu',
+  },
+  {
     id: '9',
     breadcrumbParentId: '1',
     name: 'Reservation',
