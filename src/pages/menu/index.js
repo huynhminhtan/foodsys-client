@@ -13,6 +13,11 @@ import {
   Col,
   Card,
   List,
+  Avatar,
+  Modal,
+  Result,
+  Input,
+  DatePicker,
 } from 'antd'
 // import Star from 'antd/icons/Star';
 import {
@@ -25,10 +30,16 @@ import {
 
 import { Collapse, Select } from 'antd'
 import data from './datasource'
+import { Form } from '@ant-design/compatible'
+import moment from 'moment'
+import { connect } from 'dva'
 
 const { Paragraph } = Typography
 const { Panel } = Collapse
 const { Meta } = Card
+const SelectOption = Select.Option
+const FormItem = Form.Item
+const { Search, TextArea } = Input
 
 const btnStyle = {
   marginLeft: 5,
@@ -51,8 +62,60 @@ class MenuPage extends React.Component {
     console.log(key)
   }
 
+  showModal = () => {
+    this.setState({
+      visible: true,
+    })
+  }
+
+  handleOk = e => {
+    console.log(e)
+    this.setState({
+      visible: false,
+    })
+  }
+
+  handleCancel = e => {
+    console.log(e)
+    this.setState({
+      visible: false,
+    })
+  }
+
+  showModal2 = () => {
+    this.setState({
+      visible2: true,
+    })
+  }
+
+  handleOk2 = e => {
+    console.log(e)
+    this.setState({
+      visible2: false,
+    })
+  }
+
+  handleCancel2 = e => {
+    console.log(e)
+    this.setState({
+      visible2: false,
+    })
+  }
+
+  formLayout = {
+    labelCol: {
+      span: 7,
+    },
+    wrapperCol: {
+      span: 13,
+    },
+  }
+
   render() {
     const nullData = {}
+    const {
+      form: { getFieldDecorator },
+    } = this.props
 
     const Content = ({ children, extraContent }) => {
       return (
@@ -92,7 +155,9 @@ class MenuPage extends React.Component {
         src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
         text="Product Doc"
       /> */}
-          <Button type="primary">Add Category</Button>
+          <Button type="primary" onClick={this.showModal}>
+            Add Category
+          </Button>
         </Row>
       </div>
     )
@@ -105,6 +170,74 @@ class MenuPage extends React.Component {
   Known for its loyalty and faithfulness,
   it can be found as a welcome guest in many households across the world.
 `
+
+    const getModalContent = () => {
+      return (
+        <Form>
+          <FormItem label="Image" {...this.formLayout}>
+            {getFieldDecorator(
+              'title',
+              {}
+            )(
+              <div>
+                <Avatar
+                  style={{
+                    backgroundColor: this.state.color,
+                    verticalAlign: 'middle',
+                  }}
+                  shape="square"
+                  size="large"
+                >
+                  {this.state.user}
+                </Avatar>
+                <Button
+                  size="small"
+                  style={{ verticalAlign: 'middle' }}
+                  onClick={this.changeUser}
+                >
+                  Upload
+                </Button>
+              </div>
+            )}
+          </FormItem>
+          <FormItem label="Name" {...this.formLayout}>
+            {getFieldDecorator('title', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Input phone please!',
+                },
+              ],
+              initialValue: '',
+            })(<Input placeholder="Input name" />)}
+          </FormItem>
+
+          <FormItem label="Price" {...this.formLayout}>
+            {getFieldDecorator('title', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Input number please!',
+                },
+              ],
+              initialValue: '',
+            })(<Input placeholder="Input price" />)}
+          </FormItem>
+          <FormItem {...this.formLayout} label="Description">
+            {getFieldDecorator('subDescription', {
+              rules: [
+                {
+                  message: 'Input options for reservation please！',
+                  min: 5,
+                },
+              ],
+              initialValue: '',
+            })(<TextArea rows={4} placeholder="Input description" />)}
+          </FormItem>
+        </Form>
+      )
+    }
+
     return (
       <div>
         <Card bordered={false}>
@@ -155,7 +288,11 @@ class MenuPage extends React.Component {
 
                   return (
                     <List.Item>
-                      <Button type="dashed" className={styles.btnCard}>
+                      <Button
+                        type="dashed"
+                        className={styles.btnCard}
+                        onClick={this.showModal2}
+                      >
                         <PlusOutlined /> Add
                       </Button>
                       {/*<Card*/}
@@ -183,9 +320,34 @@ class MenuPage extends React.Component {
             </Panel>
           </Collapse>
         </Card>
+
+        <Modal
+          title="Add Category"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          {/*<span>dfdf</span>*/}
+          <Input placeholder="Input name of category" />
+        </Modal>
+
+        <Modal
+          title="Add Food"
+          visible={this.state.visible2}
+          onOk={this.handleOk2}
+          onCancel={this.handleCancel2}
+        >
+          {/*<span>dfdf</span>*/}
+          {/*<Input placeholder="Input name of category" />*/}
+
+          {getModalContent()}
+        </Modal>
       </div>
     )
   }
 }
 
-export default MenuPage
+export default connect(({ reservation, loading }) => ({
+  reservation,
+  loading,
+}))(Form.create()(MenuPage))
