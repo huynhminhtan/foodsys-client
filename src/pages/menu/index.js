@@ -184,6 +184,8 @@ class MenuPage extends React.Component {
                   style={{
                     backgroundColor: this.state.color,
                     verticalAlign: 'middle',
+                    width: '100%',
+                    height: 150,
                   }}
                   shape="square"
                   size="large"
