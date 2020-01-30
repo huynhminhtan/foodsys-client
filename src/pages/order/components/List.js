@@ -4,6 +4,7 @@ import { withI18n } from '@lingui/react'
 import { Ellipsis } from 'ant-design-pro'
 import styles from './List.less'
 import moment from 'moment'
+import Link from 'umi/link'
 
 @withI18n()
 class List extends PureComponent {
@@ -27,6 +28,7 @@ class List extends PureComponent {
       {
         title: i18n.t`Receiver Name`,
         dataIndex: 'receiverName',
+        render: (text, record) => <Link to={`order/${record.id}`}>{text}</Link>,
       },
       {
         title: i18n.t`Receiver Phone`,

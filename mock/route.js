@@ -67,6 +67,19 @@ const database = [
     route: '/user/:id',
   },
   {
+    id: '212',
+    menuParentId: '-1',
+    breadcrumbParentId: '2',
+    name: 'Order Detail',
+    zh: {
+      name: '用户详情'
+    },
+    'pt-br': {
+      name: 'Detalhes do usuário'
+    },
+    route: '/order/:id',
+  },
+  {
     id: '3',
     breadcrumbParentId: '1',
     name: 'Request',
