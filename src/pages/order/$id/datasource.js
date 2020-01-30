@@ -228,16 +228,31 @@
 
 const data = [
   {
-    title: 'Title 1',
+    name: 'Bánh ngọt tráng miệng',
+    imageUrl:
+      'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/ham-%26-cheese-sandwich.jpg?itok=Ff4gnd3u',
+    option: 'Để ít bơ',
+    number: 1,
+    price: '10.000',
+    totalPrice: '10.000',
   },
   {
-    title: 'Title 2',
+    name: 'Bánh mì thịt',
+    imageUrl:
+      'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/submarine-sandwich.jpg?itok=KqUKipq_',
+    option: 'Không',
+    number: 1,
+    price: '15.000',
+    totalPrice: '15.000',
   },
   {
-    title: 'Title 3',
-  },
-  {
-    title: 'Title 4',
+    name: 'Nui thịt bầm',
+    imageUrl:
+      'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/chicken-soup.jpg?itok=lcQp426X',
+    option: 'Không để rau',
+    number: 2,
+    price: '20.000',
+    totalPrice: '40.000',
   },
 ]
 

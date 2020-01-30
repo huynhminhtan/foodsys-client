@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { List, Card } from 'antd'
+import styles from './index.less'
 
 const { Meta } = Card
 
@@ -18,16 +19,26 @@ class ListOrderDetail extends PureComponent {
             <Card
               hoverable
               style={{ width: 240 }}
-              cover={
-                <img
-                  alt="example"
-                  src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                />
-              }
+              cover={<img alt={item.name} src={item.imageUrl} />}
             >
-              <Meta title="Europe Street beat" />
+              <Meta title={item.name} />
               <br />
-              <span>dfdfdfdf</span>
+              <p className={styles.cardPtag}>
+                <span>Price: </span>
+                {item.price}đ
+              </p>
+              <p className={styles.cardPtag}>
+                <span>Number: </span>
+                {item.number}
+              </p>
+              <p className={styles.cardPtag}>
+                <span>Options: </span>
+                {item.option}
+              </p>
+              <p className={styles.cardPtag}>
+                <span>Total price: </span>
+                {item.totalPrice}đ
+              </p>
             </Card>
           </List.Item>
         )}
