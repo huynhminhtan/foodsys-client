@@ -8,11 +8,11 @@ import styles from './recentSales.less'
 const status = {
   1: {
     color: Color.green,
-    text: 'SALE',
+    text: 'DELIVERING',
   },
   2: {
     color: Color.yellow,
-    text: 'REJECT',
+    text: 'ORDERED',
   },
   3: {
     color: Color.red,
@@ -20,7 +20,7 @@ const status = {
   },
   4: {
     color: Color.blue,
-    text: 'EXTENDED',
+    text: 'COMPLETED',
   },
 }
 
@@ -28,24 +28,24 @@ function RecentSales({ data }) {
   const columns = [
     {
       title: 'NAME',
-      dataIndex: 'name',
+      dataIndex: 'receiverName',
     },
     {
       title: 'STATUS',
       dataIndex: 'status',
-      render: text => <Tag color={status[text].color}>{status[text].text}</Tag>,
+      // render: text => <Tag color={status[text].color}>{status[text].text}</Tag>,
     },
     {
-      title: 'DATE',
-      dataIndex: 'date',
+      title: 'Delivery Time',
+      dataIndex: 'deliveryTime',
       render: text => moment(text).format('YYYY-MM-DD'),
     },
     {
       title: 'PRICE',
-      dataIndex: 'price',
-      render: (text, it) => (
-        <span style={{ color: status[it.status].color }}>${text}</span>
-      ),
+      dataIndex: 'totalPrice',
+      // render: (text) => (
+      //   <span style={{ color: status[text].color }}>{status[text].text}</span>
+      // ),
     },
   ]
   return (

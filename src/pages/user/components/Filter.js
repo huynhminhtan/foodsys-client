@@ -100,24 +100,24 @@ class Filter extends Component {
             />
           )}
         </Col>
-        <Col
-          {...ColProps}
-          xl={{ span: 4 }}
-          md={{ span: 8 }}
-          id="addressCascader"
-        >
-          {getFieldDecorator('address', { initialValue: address })(
-            <Cascader
-              style={{ width: '100%' }}
-              options={city}
-              placeholder={i18n.t`Please pick an address`}
-              onChange={this.handleChange.bind(this, 'address')}
-              getPopupContainer={() =>
-                document.getElementById('addressCascader')
-              }
-            />
-          )}
-        </Col>
+        {/*<Col*/}
+        {/*  {...ColProps}*/}
+        {/*  xl={{ span: 4 }}*/}
+        {/*  md={{ span: 8 }}*/}
+        {/*  id="addressCascader"*/}
+        {/*>*/}
+        {/*  {getFieldDecorator('address', { initialValue: address })(*/}
+        {/*    <Cascader*/}
+        {/*      style={{ width: '100%' }}*/}
+        {/*      options={city}*/}
+        {/*      placeholder={i18n.t`Please pick an address`}*/}
+        {/*      onChange={this.handleChange.bind(this, 'address')}*/}
+        {/*      getPopupContainer={() =>*/}
+        {/*        document.getElementById('addressCascader')*/}
+        {/*      }*/}
+        {/*    />*/}
+        {/*  )}*/}
+        {/*</Col>*/}
         <Col
           {...ColProps}
           xl={{ span: 6 }}

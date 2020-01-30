@@ -41,17 +41,17 @@ const database = [
     route: '/menu',
   },
   {
-    id: '311',
+    id: '7',
     breadcrumbParentId: '1',
-    name: 'Promotions',
+    name: 'Orders',
     zh: {
-      name: 'Request'
+      name: '用户管理'
     },
     'pt-br': {
-      name: 'Requisição'
+      name: 'Posts'
     },
-    icon: 'diff',
-    route: '/promotion',
+    icon: 'shopping-cart',
+    route: '/order',
   },
   {
     id: '9',
@@ -67,17 +67,30 @@ const database = [
     route: '/reservation',
   },
   {
-    id: '7',
+    id: '311',
     breadcrumbParentId: '1',
-    name: 'Orders',
+    name: 'Promotions',
+    zh: {
+      name: 'Request'
+    },
+    'pt-br': {
+      name: 'Requisição'
+    },
+    icon: 'diff',
+    route: '/promotion',
+  },
+  {
+    id: '77',
+    breadcrumbParentId: '1',
+    name: 'Feedback',
     zh: {
       name: '用户管理'
     },
     'pt-br': {
       name: 'Posts'
     },
-    icon: 'shopping-cart',
-    route: '/order',
+    icon: 'redo',
+    route: '/feedback',
   },
   {
     id: '21',
@@ -105,99 +118,99 @@ const database = [
     },
     route: '/order/:id',
   },
-  {
-    id: '3',
-    breadcrumbParentId: '1',
-    name: 'Request',
-    zh: {
-      name: 'Request'
-    },
-    'pt-br': {
-      name: 'Requisição'
-    },
-    icon: 'api',
-    route: '/request',
-  },
-  {
-    id: '4',
-    breadcrumbParentId: '1',
-    name: 'UI Element',
-    zh: {
-      name: 'UI组件'
-    },
-    'pt-br': {
-      name: 'Elementos UI'
-    },
-    icon: 'camera-o',
-  },
-  {
-    id: '45',
-    breadcrumbParentId: '4',
-    menuParentId: '4',
-    name: 'Editor',
-    zh: {
-      name: 'Editor'
-    },
-    'pt-br': {
-      name: 'Editor'
-    },
-    icon: 'edit',
-    route: '/UIElement/editor',
-  },
-  {
-    id: '5',
-    breadcrumbParentId: '1',
-    name: 'Charts',
-    zh: {
-      name: 'Charts'
-    },
-    'pt-br': {
-      name: 'Graficos'
-    },
-    icon: 'code-o',
-  },
-  {
-    id: '51',
-    breadcrumbParentId: '5',
-    menuParentId: '5',
-    name: 'ECharts',
-    zh: {
-      name: 'ECharts'
-    },
-    'pt-br': {
-      name: 'ECharts'
-    },
-    icon: 'line-chart',
-    route: '/chart/ECharts',
-  },
-  {
-    id: '52',
-    breadcrumbParentId: '5',
-    menuParentId: '5',
-    name: 'HighCharts',
-    zh: {
-      name: 'HighCharts'
-    },
-    'pt-br': {
-      name: 'HighCharts'
-    },
-    icon: 'bar-chart',
-    route: '/chart/highCharts',
-  },
-  {
-    id: '53',
-    breadcrumbParentId: '5',
-    menuParentId: '5',
-    name: 'Rechartst',
-    zh: {
-      name: 'Rechartst'
-    },
-    'pt-br': {
-      name: 'Rechartst'
-    },
-    icon: 'area-chart',
-    route: '/chart/Recharts',
-  },
+  // {
+  //   id: '3',
+  //   breadcrumbParentId: '1',
+  //   name: 'Request',
+  //   zh: {
+  //     name: 'Request'
+  //   },
+  //   'pt-br': {
+  //     name: 'Requisição'
+  //   },
+  //   icon: 'api',
+  //   route: '/request',
+  // },
+  // {
+  //   id: '4',
+  //   breadcrumbParentId: '1',
+  //   name: 'UI Element',
+  //   zh: {
+  //     name: 'UI组件'
+  //   },
+  //   'pt-br': {
+  //     name: 'Elementos UI'
+  //   },
+  //   icon: 'camera-o',
+  // },
+  // {
+  //   id: '45',
+  //   breadcrumbParentId: '4',
+  //   menuParentId: '4',
+  //   name: 'Editor',
+  //   zh: {
+  //     name: 'Editor'
+  //   },
+  //   'pt-br': {
+  //     name: 'Editor'
+  //   },
+  //   icon: 'edit',
+  //   route: '/UIElement/editor',
+  // },
+  // {
+  //   id: '5',
+  //   breadcrumbParentId: '1',
+  //   name: 'Charts',
+  //   zh: {
+  //     name: 'Charts'
+  //   },
+  //   'pt-br': {
+  //     name: 'Graficos'
+  //   },
+  //   icon: 'code-o',
+  // },
+  // {
+  //   id: '51',
+  //   breadcrumbParentId: '5',
+  //   menuParentId: '5',
+  //   name: 'ECharts',
+  //   zh: {
+  //     name: 'ECharts'
+  //   },
+  //   'pt-br': {
+  //     name: 'ECharts'
+  //   },
+  //   icon: 'line-chart',
+  //   route: '/chart/ECharts',
+  // },
+  // {
+  //   id: '52',
+  //   breadcrumbParentId: '5',
+  //   menuParentId: '5',
+  //   name: 'HighCharts',
+  //   zh: {
+  //     name: 'HighCharts'
+  //   },
+  //   'pt-br': {
+  //     name: 'HighCharts'
+  //   },
+  //   icon: 'bar-chart',
+  //   route: '/chart/highCharts',
+  // },
+  // {
+  //   id: '53',
+  //   breadcrumbParentId: '5',
+  //   menuParentId: '5',
+  //   name: 'Rechartst',
+  //   zh: {
+  //     name: 'Rechartst'
+  //   },
+  //   'pt-br': {
+  //     name: 'Rechartst'
+  //   },
+  //   icon: 'area-chart',
+  //   route: '/chart/Recharts',
+  // },
 ]
 
 module.exports = {
