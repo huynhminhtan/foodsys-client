@@ -41,6 +41,19 @@ const database = [
     route: '/menu',
   },
   {
+    id: '311',
+    breadcrumbParentId: '1',
+    name: 'Promotions',
+    zh: {
+      name: 'Request'
+    },
+    'pt-br': {
+      name: 'Requisição'
+    },
+    icon: 'diff',
+    route: '/promotion',
+  },
+  {
     id: '9',
     breadcrumbParentId: '1',
     name: 'Reservation',
