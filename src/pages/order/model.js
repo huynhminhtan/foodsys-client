@@ -3,21 +3,18 @@ import api from 'api'
 import { pathMatchRegexp } from 'utils'
 import { pageModel } from 'utils/model'
 
-const { queryPostList } = api
+const { queryOrderList } = api
 
 export default modelExtend(pageModel, {
-  namespace: 'post',
+  namespace: 'order',
 
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen(location => {
-        if (pathMatchRegexp('/post', location.pathname)) {
+        if (pathMatchRegexp('/order', location.pathname)) {
           dispatch({
             type: 'query',
-            payload: {
-              status: 2,
-              ...location.query,
-            },
+            payload: {},
           })
         }
       })
@@ -26,12 +23,12 @@ export default modelExtend(pageModel, {
 
   effects: {
     *query({ payload }, { call, put }) {
-      const data = yield call(queryPostList, payload)
+      const data = yield call(queryOrderList, payload)
       if (data.success) {
         yield put({
           type: 'querySuccess',
           payload: {
-            list: data.data,
+            list: data.list,
             pagination: {
               current: Number(payload.page) || 1,
               pageSize: Number(payload.pageSize) || 10,

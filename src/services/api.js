@@ -18,4 +18,5 @@ export default {
   queryDashboard: '/dashboard',
 
   queryReservationList: 'http://localhost:8080/reservation/all',
+  queryOrderList: 'http://localhost:8080/order',
 }

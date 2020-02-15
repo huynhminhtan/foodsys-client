@@ -21,7 +21,7 @@ const EnumPostStatus = {
 }
 
 @withI18n()
-@connect(({ post, loading }) => ({ post, loading }))
+@connect(({ order, loading }) => ({ order, loading }))
 class Order extends PureComponent {
   handleTabClick = key => {
     const { pathname } = this.props.location
@@ -35,15 +35,15 @@ class Order extends PureComponent {
   }
 
   get listProps() {
-    const { post, loading, location } = this.props
-    const { list, pagination } = post
+    const { order, loading, location } = this.props
+    const { list, pagination } = order
     const { query, pathname } = location
 
-    console.log('list== ' + JSON.stringify(data))
+    console.log('list== ' + JSON.stringify(list))
     return {
       pagination,
-      // dataSource: list,
-      dataSource: data,
+      // dataSource: data,
+      dataSource: list,
       loading: loading.effects['post/query'],
       onChange(page) {
         router.push({
