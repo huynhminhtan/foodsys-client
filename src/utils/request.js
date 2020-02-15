@@ -42,6 +42,7 @@ export default function request(options) {
     })
   })
 
+  console.log('===options=' + JSON.stringify(options))
   return axios(options)
     .then(response => {
       const { statusText, status, data } = response

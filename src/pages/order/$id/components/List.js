@@ -1,21 +1,20 @@
 import React, { PureComponent } from 'react'
 import { List, Card } from 'antd'
 import styles from './index.less'
+import { formatter } from '../../../../utils/common'
 
 const { Meta } = Card
 
 class ListOrderDetail extends PureComponent {
   render() {
-    const { data } = this.props
+    const { ...tableProps } = this.props
 
     return (
       <List
         grid={{ gutter: 16, column: 4 }}
-        dataSource={data}
+        {...tableProps}
         renderItem={item => (
           <List.Item>
-            {/*<Card title={item.title}>Card content</Card>*/}
-
             <Card
               hoverable
               style={{ width: 240 }}
@@ -25,7 +24,7 @@ class ListOrderDetail extends PureComponent {
               <br />
               <p className={styles.cardPtag}>
                 <span>Price: </span>
-                {item.price}đ
+                {formatter(item.price)}
               </p>
               <p className={styles.cardPtag}>
                 <span>Number: </span>
@@ -33,11 +32,11 @@ class ListOrderDetail extends PureComponent {
               </p>
               <p className={styles.cardPtag}>
                 <span>Options: </span>
-                {item.option}
+                {item.moreOptions}
               </p>
               <p className={styles.cardPtag}>
                 <span>Total price: </span>
-                {item.totalPrice}đ
+                {formatter(item.price * item.number)}
               </p>
             </Card>
           </List.Item>

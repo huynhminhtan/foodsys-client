@@ -44,7 +44,7 @@ class Order extends PureComponent {
       pagination,
       // dataSource: data,
       dataSource: list,
-      loading: loading.effects['post/query'],
+      loading: loading.effects['order/query'],
       onChange(page) {
         router.push({
           pathname,

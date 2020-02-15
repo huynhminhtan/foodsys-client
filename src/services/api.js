@@ -16,6 +16,8 @@ export default {
   queryPostList: '/posts',
 
   queryDashboard: '/dashboard',
+  queryOrder: 'http://localhost:8080/order/:id',
+  queryOrderDetail: 'http://localhost:8080/order/:id/detail',
 
   queryReservationList: 'http://localhost:8080/reservation/all',
   queryOrderList: 'http://localhost:8080/order',

@@ -14,15 +14,17 @@ class List extends PureComponent {
       {
         title: i18n.t`OrderId`,
         dataIndex: 'id',
-        render: text => (
-          <Avatar
-            className={styles.antAvatar}
-            shape="square"
-            src={
-              'https://dummyimage.com/70x70/f2798e/757575.png&text=' +
-              String(text)
-            }
-          />
+        render: (text, record) => (
+          <Link to={`order/${record.id}`}>
+            <Avatar
+              className={styles.antAvatar}
+              shape="square"
+              src={
+                'https://dummyimage.com/70x70/f2798e/757575.png&text=' +
+                String(text)
+              }
+            />
+          </Link>
         ),
       },
       {

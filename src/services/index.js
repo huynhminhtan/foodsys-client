@@ -32,8 +32,8 @@ const gen = params => {
         method
     )
     return request({
-      url,
       data,
+      url,
       method,
     })
   }
