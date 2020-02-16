@@ -40,7 +40,7 @@ class Order extends PureComponent {
     const { list, pagination } = order
     const { query, pathname } = location
 
-    console.log('list== ' + JSON.stringify(list))
+    // console.log('list== ' + JSON.stringify(list))
     return {
       pagination,
       // dataSource: data,

@@ -39,7 +39,7 @@ class FeedbackPage extends PureComponent {
     const { list, pagination } = post
     const { query, pathname } = location
 
-    console.log('list== ' + JSON.stringify(data))
+    // console.log('list== ' + JSON.stringify(data))
     return {
       pagination,
       // dataSource: list,
