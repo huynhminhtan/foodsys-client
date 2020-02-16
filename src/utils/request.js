@@ -41,6 +41,11 @@ export default function request(options) {
       cancel,
     })
   })
+  // options.headers = {
+  //   "Access-Control-Allow-Origin": "*",
+  //   "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+  //   "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token"
+  // }
 
   console.log('===options=' + JSON.stringify(options))
   return axios(options)

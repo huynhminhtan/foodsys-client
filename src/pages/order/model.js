@@ -3,7 +3,7 @@ import api from 'api'
 import { pathMatchRegexp } from 'utils'
 import { pageModel } from 'utils/model'
 
-const { queryOrderList } = api
+const { queryOrderList, updateOrderStatus } = api
 
 export default modelExtend(pageModel, {
   namespace: 'order',
@@ -36,6 +36,15 @@ export default modelExtend(pageModel, {
             },
           },
         })
+      } else {
+        throw data
+      }
+    },
+
+    *update({ payload }, { call, put }) {
+      const data = yield call(updateOrderStatus, payload)
+      if (data.success) {
+        console.log('updateOrderStatus= ' + JSON.stringify(data))
       } else {
         throw data
       }

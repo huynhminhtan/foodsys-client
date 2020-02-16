@@ -17,6 +17,8 @@ export default {
 
   queryDashboard: '/dashboard',
   queryOrder: 'http://localhost:8080/order/:id',
+  updateOrderStatus: 'Put http://localhost:8080/order/:id',
+
   queryOrderDetail: 'http://localhost:8080/order/:id/detail',
 
   queryReservationList: 'http://localhost:8080/reservation/all',

@@ -8,6 +8,7 @@ import { withI18n } from '@lingui/react'
 import { Page } from 'components'
 import List from './components/List'
 import data from './datasource'
+import { success } from '../../components/Message/Message'
 
 const { TabPane } = Tabs
 
@@ -35,7 +36,7 @@ class Order extends PureComponent {
   }
 
   get listProps() {
-    const { order, loading, location } = this.props
+    const { order, loading, location, dispatch } = this.props
     const { list, pagination } = order
     const { query, pathname } = location
 
@@ -53,6 +54,21 @@ class Order extends PureComponent {
             page: page.current,
             pageSize: page.pageSize,
           }),
+        })
+      },
+      updateStatus(id, status) {
+        dispatch({
+          type: `order/update`,
+          payload: {
+            id: id,
+            status: status,
+          },
+        }).then(() => {
+          success('Update Status Order #' + id + ' success')
+          dispatch({
+            type: 'order/query',
+            payload: {},
+          })
         })
       },
     }

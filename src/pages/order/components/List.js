@@ -1,15 +1,20 @@
 import React, { PureComponent } from 'react'
-import { Table, Avatar } from 'antd'
+import { Table, Avatar, Popconfirm, Button } from 'antd'
 import { withI18n } from '@lingui/react'
 import { Ellipsis } from 'ant-design-pro'
 import styles from './List.less'
 import moment from 'moment'
 import Link from 'umi/link'
+import { increaseStatus, OrderStatusEnum } from '../../../enums/OrderStatusEnum'
 
 @withI18n()
 class List extends PureComponent {
   render() {
-    const { i18n, ...tableProps } = this.props
+    const { i18n, updateStatus, ...tableProps } = this.props
+    const handleUpdate = (id, status) => {
+      updateStatus(id, status)
+    }
+
     const columns = [
       {
         title: i18n.t`OrderId`,
@@ -66,6 +71,21 @@ class List extends PureComponent {
       {
         title: i18n.t`Status`,
         dataIndex: 'status',
+      },
+      {
+        title: 'Operation',
+        dataIndex: 'status',
+        render: (text, record) =>
+          OrderStatusEnum[text] < 5 ? (
+            <Popconfirm
+              title="Sure to update?"
+              onConfirm={() => handleUpdate(record.id, increaseStatus(text))}
+            >
+              <Button size="small">{increaseStatus(text)}</Button>
+            </Popconfirm>
+          ) : (
+            <span>_</span>
+          ),
       },
     ]
 
