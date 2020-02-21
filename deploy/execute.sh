@@ -10,8 +10,8 @@ cp -R ./* $WP/
 cd $WP
 pwd
 
-yarn install
-yarn start
+#yarn install
+#yarn start
 
 #rm -rf /cbserver/foodsys/foodsys-client/*
 #cp -R ./dist/* /cbserver/foodsys/foodsys-client/
