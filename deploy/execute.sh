@@ -1,3 +1,5 @@
+#!/bin/sh
+
 export PATH=/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
 pwd
 
