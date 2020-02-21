@@ -18,7 +18,8 @@ export PATH="$PATH:$MAVEN_HOME/bin"
 #cd /cbserver/foodsys/foodsys-client/
 
 yarn install
-yarn start
+
+nohup yarn start > nohup.log &
 #
 ## shellcheck disable=SC2164
 #cd ./source/foodsys/foodsys-service
