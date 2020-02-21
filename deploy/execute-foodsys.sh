@@ -12,9 +12,15 @@ export PATH="$PATH:$MAVEN_HOME/bin"
 
 #FOODSYS=foodsys-service
 #
-WP=/cbserver/foodsys/foodsys-client
+#WP=/cbserver/foodsys/foodsys-client
+#
+#rm -rf /cbserver/foodsys/foodsys-client/*
+#cp -R ./* /cbserver/foodsys/foodsys-client/
 
-rm -rf /cbserver/foodsys/foodsys-client/*
+#cd /cbserver/foodsys/foodsys-client/
+
+yarn install
+nohup yarn start > nohup.log &
 #
 ## shellcheck disable=SC2164
 #cd ./source/foodsys/foodsys-service
