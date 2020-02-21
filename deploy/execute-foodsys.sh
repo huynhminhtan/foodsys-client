@@ -8,8 +8,6 @@ export PATH="$PATH:$JAVA_HOME/bin"
 export MAVEN_HOME=/usr/share/maven
 export PATH="$PATH:$MAVEN_HOME/bin"
 
-
-
 #FOODSYS=foodsys-service
 #
 #WP=/cbserver/foodsys/foodsys-client
@@ -20,7 +18,7 @@ export PATH="$PATH:$MAVEN_HOME/bin"
 #cd /cbserver/foodsys/foodsys-client/
 
 yarn install
-nohup yarn start > nohup.log &
+yarn start
 #
 ## shellcheck disable=SC2164
 #cd ./source/foodsys/foodsys-service
