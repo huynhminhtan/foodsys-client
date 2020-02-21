@@ -7,7 +7,7 @@ export default {
 
   queryUser: '/user/:id',
   // queryUserList: '/users',
-  queryUserList: 'http://localhost:8080/user/all',
+  queryUserList: 'http://localhost:9080/user/all',
   updateUser: 'Patch /user/:id',
   createUser: 'POST /user',
   removeUser: 'DELETE /user/:id',
@@ -16,11 +16,11 @@ export default {
   queryPostList: '/posts',
 
   queryDashboard: '/dashboard',
-  queryOrder: 'http://localhost:8080/order/:id',
-  updateOrderStatus: 'Put http://localhost:8080/order/:id',
+  queryOrder: 'http://localhost:9080/order/:id',
+  updateOrderStatus: 'Put http://localhost:9080/order/:id',
 
-  queryOrderDetail: 'http://localhost:8080/order/:id/detail',
+  queryOrderDetail: 'http://localhost:9080/order/:id/detail',
 
-  queryReservationList: 'http://localhost:8080/reservation/all',
-  queryOrderList: 'http://localhost:8080/order',
+  queryReservationList: 'http://localhost:9080/reservation/all',
+  queryOrderList: 'http://localhost:9080/order',
 }

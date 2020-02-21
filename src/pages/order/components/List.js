@@ -78,6 +78,7 @@ class List extends PureComponent {
         render: (text, record) =>
           OrderStatusEnum[text] < 5 ? (
             <Popconfirm
+              placement="topRight"
               title="Sure to update?"
               onConfirm={() => handleUpdate(record.id, increaseStatus(text))}
             >
