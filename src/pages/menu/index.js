@@ -29,7 +29,7 @@ import {
 } from '@ant-design/icons'
 
 import { Collapse, Select } from 'antd'
-import data from './datasource'
+import { data, data2, data3 } from './datasource'
 import { Form } from '@ant-design/compatible'
 import moment from 'moment'
 import { connect } from 'dva'
@@ -315,10 +315,118 @@ class MenuPage extends React.Component {
               />
             </Panel>
             <Panel header="Món nước" key="2" extra={genExtra()}>
-              <div>{text}</div>
+              <List
+                grid={{ gutter: 16, column: 4 }}
+                dataSource={[...data2, nullData]}
+                renderItem={item => {
+                  if (item && item.name) {
+                    return (
+                      <List.Item>
+                        <Card
+                          hoverable
+                          style={{ width: 240 }}
+                          cover={<img alt={item.name} src={item.imageUrl} />}
+                          actions={[
+                            <a key="edit">Edit</a>,
+                            <a key="remove">Remove</a>,
+                          ]}
+                        >
+                          <Meta
+                            title={item.name}
+                            description={item.description}
+                          />
+                          <br />
+                          <p className={styles.cardPtag}>
+                            <span>Price: </span>
+                            {item.price}đ
+                          </p>
+                        </Card>
+                      </List.Item>
+                    )
+                  }
+
+                  return (
+                    <List.Item>
+                      <Button
+                        type="dashed"
+                        className={styles.btnCard}
+                        onClick={this.showModal2}
+                      >
+                        <PlusOutlined /> Add
+                      </Button>
+                      {/*<Card*/}
+                      {/*  hoverable*/}
+                      {/*  style={{width: 240}}*/}
+                      {/*  cover={<img alt={item.name} src={item.imageUrl}/>}*/}
+                      {/*>*/}
+                      {/*  <Meta title={item.name} description={item.description}/>*/}
+                      {/*  <br/>*/}
+                      {/*  <p className={styles.cardPtag}>*/}
+                      {/*    <span>Prixxxxxce: </span>*/}
+                      {/*    {item.price}đ*/}
+                      {/*  </p>*/}
+                      {/*</Card>*/}
+                    </List.Item>
+                  )
+                }}
+              />
             </Panel>
-            <Panel header="Thức uống" key="3" extra={genExtra()}>
-              <div>{text}</div>
+            <Panel header="Thức ăn nhanh" key="3" extra={genExtra()}>
+              <List
+                grid={{ gutter: 16, column: 4 }}
+                dataSource={[...data3, nullData]}
+                renderItem={item => {
+                  if (item && item.name) {
+                    return (
+                      <List.Item>
+                        <Card
+                          hoverable
+                          style={{ width: 240 }}
+                          cover={<img alt={item.name} src={item.imageUrl} />}
+                          actions={[
+                            <a key="edit">Edit</a>,
+                            <a key="remove">Remove</a>,
+                          ]}
+                        >
+                          <Meta
+                            title={item.name}
+                            description={item.description}
+                          />
+                          <br />
+                          <p className={styles.cardPtag}>
+                            <span>Price: </span>
+                            {item.price}đ
+                          </p>
+                        </Card>
+                      </List.Item>
+                    )
+                  }
+
+                  return (
+                    <List.Item>
+                      <Button
+                        type="dashed"
+                        className={styles.btnCard}
+                        onClick={this.showModal2}
+                      >
+                        <PlusOutlined /> Add
+                      </Button>
+                      {/*<Card*/}
+                      {/*  hoverable*/}
+                      {/*  style={{width: 240}}*/}
+                      {/*  cover={<img alt={item.name} src={item.imageUrl}/>}*/}
+                      {/*>*/}
+                      {/*  <Meta title={item.name} description={item.description}/>*/}
+                      {/*  <br/>*/}
+                      {/*  <p className={styles.cardPtag}>*/}
+                      {/*    <span>Prixxxxxce: </span>*/}
+                      {/*    {item.price}đ*/}
+                      {/*  </p>*/}
+                      {/*</Card>*/}
+                    </List.Item>
+                  )
+                }}
+              />
             </Panel>
           </Collapse>
         </Card>

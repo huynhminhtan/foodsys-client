@@ -226,7 +226,7 @@
 //   },
 // ]
 
-const data = [
+export const data = [
   {
     name: 'Bánh ngọt tráng miệng',
     imageUrl:
@@ -264,4 +264,50 @@ const data = [
   },
 ]
 
-export default data
+export const data2 = [
+  {
+    name: 'Bánh mì kẹp',
+    imageUrl:
+      'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/italian-permesan.jpg',
+    price: '10.000',
+    description: 'Kẹp xúc xích và bánh mì có hương vị bơ',
+  },
+  {
+    name: 'Bánh ngọt tráng miệng',
+    imageUrl:
+      'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/ham-%26-cheese-sandwich.jpg?itok=Ff4gnd3u',
+    price: '10.000',
+    description: 'Được làm từ kem, đường và sữa tươi',
+  },
+  {
+    name: 'Bánh mì thịt',
+    imageUrl:
+      'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/submarine-sandwich.jpg',
+    price: '15.000',
+    description: 'Những lát thịt nguội góp phần làm cho bánh mì thêm ngon',
+  },
+  {
+    name: 'Nui thịt bầm',
+    imageUrl:
+      'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/chicken-soup.jpg',
+    price: '20.000',
+    description: 'Nui nấu mềm, cùng thịt ba chỉ bầm',
+  },
+]
+
+export const data3 = [
+  {
+    name: 'Nui thịt bầm',
+    imageUrl:
+      'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/chicken-soup.jpg',
+    price: '20.000',
+    description: 'Nui nấu mềm, cùng thịt ba chỉ bầm',
+  },
+  {
+    name: 'Canh khoai tây',
+    imageUrl:
+      'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/vegetable-soup.jpg?itok=BCHhcCdf',
+    price: '25.000',
+    description: 'Gồm dâu tầm, cải bắp và khoai tây',
+  },
+]
