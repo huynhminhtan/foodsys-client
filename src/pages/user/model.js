@@ -38,7 +38,7 @@ export default modelExtend(pageModel, {
   effects: {
     *query({ payload = {} }, { call, put }) {
       const data = yield call(queryUserList, payload)
-      console.log('data: ' + JSON.stringify(data.list))
+      // console.log('data: ' + JSON.stringify(data.list))
       if (data) {
         yield put({
           type: 'querySuccess',
@@ -55,7 +55,9 @@ export default modelExtend(pageModel, {
     },
 
     *delete({ payload }, { call, put, select }) {
-      const data = yield call(removeUser, { id: payload })
+      console.log('==========payload')
+      console.log(payload)
+      const data = yield call(removeUser, { messengerId: payload })
       const { selectedRowKeys } = yield select(_ => _.user)
       if (data.success) {
         yield put({
@@ -88,7 +90,11 @@ export default modelExtend(pageModel, {
     },
 
     *update({ payload }, { select, call, put }) {
+      console.log('=ssddd======11=')
       const id = yield select(({ user }) => user.currentItem.id)
+      console.log('=ssddd=======')
+      console.log(id)
+      console.log(payload)
       const newUser = { ...payload, id }
       const data = yield call(updateUser, newUser)
       if (data.success) {

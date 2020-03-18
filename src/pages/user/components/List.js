@@ -20,7 +20,7 @@ class List extends PureComponent {
       confirm({
         title: i18n.t`Are you sure delete this record?`,
         onOk() {
-          onDeleteItem(record.id)
+          onDeleteItem(record.messengerId)
         },
       })
     }
@@ -29,7 +29,7 @@ class List extends PureComponent {
   render() {
     const { onDeleteItem, onEditItem, i18n, ...tableProps } = this.props
 
-    console.log('oki-----' + JSON.stringify(tableProps.dataSource))
+    // console.log('oki-----' + JSON.stringify(tableProps.dataSource))
 
     const columns = [
       {
@@ -51,13 +51,13 @@ class List extends PureComponent {
         title: <Trans>Name</Trans>,
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,
+        render: (text, record) => <Link>{text}</Link>,
+        // render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,
       },
       {
         title: <Trans>Gender</Trans>,
-        dataIndex: 'isMale',
-        key: 'isMale',
-        render: text => <span>{text ? 'Male' : 'Female'}</span>,
+        dataIndex: 'gender',
+        key: 'gender',
       },
       {
         title: <Trans>Phone</Trans>,
@@ -79,9 +79,7 @@ class List extends PureComponent {
         dataIndex: 'createdAt',
         key: 'createdAt',
         render: text => (
-          <span>
-            {moment(parseInt(text) * 1000).format('DD/MM/YYYY HH:mm:ss')}
-          </span>
+          <span>{moment(parseInt(text)).format('DD/MM/YYYY HH:mm:ss')}</span>
         ),
       },
       {
@@ -89,9 +87,7 @@ class List extends PureComponent {
         dataIndex: 'updatedAt',
         key: 'updatedAt',
         render: text => (
-          <span>
-            {moment(parseInt(text) * 1000).format('DD/MM/YYYY HH:mm:ss')}
-          </span>
+          <span>{moment(parseInt(text)).format('DD/MM/YYYY HH:mm:ss')}</span>
         ),
       },
       {

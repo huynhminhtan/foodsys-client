@@ -5,12 +5,19 @@ export default {
   logoutUser: '/user/logout',
   loginUser: 'POST /user/login',
 
+  createMenu: 'POST http://localhost:9080/food/category/add',
+  createFood: 'POST http://localhost:9080/food/add',
+
+  categoryAndFoods: 'http://localhost:9080/food/category/allwithfoods',
+
   queryUser: '/user/:id',
   // queryUserList: '/users',
   queryUserList: 'http://localhost:9080/user/all',
-  updateUser: 'Patch /user/:id',
+  updateUser: 'POST http://localhost:9080/user/add',
+  // updateUser: 'Patch /user/:id',
   createUser: 'POST /user',
-  removeUser: 'DELETE /user/:id',
+  // removeUser: 'DELETE /user/:id',
+  removeUser: 'POST http://localhost:9080/user/delete',
   removeUserList: 'POST /users/delete',
 
   queryPostList: '/posts',

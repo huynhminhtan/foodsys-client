@@ -32,7 +32,7 @@ export default modelExtend(pageModel, {
   effects: {
     *query({ payload = {} }, { call, put }) {
       const data = yield call(queryReservationList, payload)
-      console.log('data: ' + JSON.stringify(data.list))
+      // console.log('data: ' + JSON.stringify(data.list))
       if (data) {
         yield put({
           type: 'querySuccess',

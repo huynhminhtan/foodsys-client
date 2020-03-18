@@ -311,3 +311,369 @@ export const data3 = [
     description: 'Gồm dâu tầm, cải bắp và khoai tây',
   },
 ]
+
+export const data4 = [
+  {
+    category: {
+      id: 6,
+      name: 'Nước uống',
+      description: null,
+      imageUrl:
+        'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/2-LTR-Coca-Cola_0.jpg?itok=d5p5PR-8',
+      createdAt: null,
+      updatedAt: null,
+      isActive: 1,
+    },
+    foods: [
+      {
+        id: 1,
+        name: 'Fanta',
+        description: null,
+        imageUrl:
+          'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/2-LTR-Fanta_0.jpg?itok=MF8JO50C',
+        createdAt: null,
+        updatedAt: null,
+        isActive: 1,
+        price: 17000,
+        category: {
+          id: 6,
+          name: 'Nước uống',
+          description: null,
+          imageUrl:
+            'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/2-LTR-Coca-Cola_0.jpg?itok=d5p5PR-8',
+          createdAt: null,
+          updatedAt: null,
+          isActive: 1,
+        },
+      },
+      {
+        id: 2,
+        name: 'Sprite',
+        description: null,
+        imageUrl:
+          'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/2-LTR-Sprite_0.jpg?itok=fDQ_PmSr',
+        createdAt: null,
+        updatedAt: null,
+        isActive: 1,
+        price: 17000,
+        category: {
+          id: 6,
+          name: 'Nước uống',
+          description: null,
+          imageUrl:
+            'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/2-LTR-Coca-Cola_0.jpg?itok=d5p5PR-8',
+          createdAt: null,
+          updatedAt: null,
+          isActive: 1,
+        },
+      },
+      {
+        id: 3,
+        name: 'Coke Zero',
+        description: null,
+        imageUrl:
+          'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/2-LTR-Coke-Zero_0.jpg?itok=R55SHdvu',
+        createdAt: null,
+        updatedAt: null,
+        isActive: 1,
+        price: 17000,
+        category: {
+          id: 6,
+          name: 'Nước uống',
+          description: null,
+          imageUrl:
+            'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/2-LTR-Coca-Cola_0.jpg?itok=d5p5PR-8',
+          createdAt: null,
+          updatedAt: null,
+          isActive: 1,
+        },
+      },
+      {
+        id: 4,
+        name: 'PIBB Xtra',
+        description: null,
+        imageUrl:
+          'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/2-LTR-PIBB-Xtra_0.jpg?itok=HMSYv3Mz',
+        createdAt: null,
+        updatedAt: null,
+        isActive: 1,
+        price: 17000,
+        category: {
+          id: 6,
+          name: 'Nước uống',
+          description: null,
+          imageUrl:
+            'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/2-LTR-Coca-Cola_0.jpg?itok=d5p5PR-8',
+          createdAt: null,
+          updatedAt: null,
+          isActive: 1,
+        },
+      },
+    ],
+  },
+  {
+    category: {
+      id: 1,
+      name: 'Món nước',
+      description: null,
+      imageUrl:
+        'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/vegetable-soup.jpg?itok=BCHhcCdf',
+      createdAt: null,
+      updatedAt: null,
+      isActive: 1,
+    },
+    foods: [
+      {
+        id: 8,
+        name: 'Canh gà',
+        description: null,
+        imageUrl:
+          'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/chicken-soup.jpg?itok=lcQp426X',
+        createdAt: null,
+        updatedAt: null,
+        isActive: 1,
+        price: 45000,
+        category: {
+          id: 1,
+          name: 'Món nước',
+          description: null,
+          imageUrl:
+            'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/vegetable-soup.jpg?itok=BCHhcCdf',
+          createdAt: null,
+          updatedAt: null,
+          isActive: 1,
+        },
+      },
+      {
+        id: 9,
+        name: 'Canh thập cẩm',
+        description: null,
+        imageUrl:
+          'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/vegetable-soup.jpg?itok=BCHhcCdf',
+        createdAt: null,
+        updatedAt: null,
+        isActive: 1,
+        price: 40000,
+        category: {
+          id: 1,
+          name: 'Món nước',
+          description: null,
+          imageUrl:
+            'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/vegetable-soup.jpg?itok=BCHhcCdf',
+          createdAt: null,
+          updatedAt: null,
+          isActive: 1,
+        },
+      },
+    ],
+  },
+  {
+    category: {
+      id: 3,
+      name: 'Món rau',
+      description: null,
+      imageUrl:
+        'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/dinner-salad.jpg?itok=hFBGQcxD',
+      createdAt: null,
+      updatedAt: null,
+      isActive: 1,
+    },
+    foods: [
+      {
+        id: 5,
+        name: 'Cải trộn tôm',
+        description: null,
+        imageUrl:
+          'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/caesar-salad.jpg?itok=CQU-B5HD',
+        createdAt: null,
+        updatedAt: null,
+        isActive: 1,
+        price: 30000,
+        category: {
+          id: 3,
+          name: 'Món rau',
+          description: null,
+          imageUrl:
+            'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/dinner-salad.jpg?itok=hFBGQcxD',
+          createdAt: null,
+          updatedAt: null,
+          isActive: 1,
+        },
+      },
+      {
+        id: 6,
+        name: 'Xà lách tàu hủ',
+        description: null,
+        imageUrl:
+          'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/greek-salad.jpg?itok=rcZiThbx',
+        createdAt: null,
+        updatedAt: null,
+        isActive: 1,
+        price: 30000,
+        category: {
+          id: 3,
+          name: 'Món rau',
+          description: null,
+          imageUrl:
+            'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/dinner-salad.jpg?itok=hFBGQcxD',
+          createdAt: null,
+          updatedAt: null,
+          isActive: 1,
+        },
+      },
+      {
+        id: 7,
+        name: 'Hành lá gói ếch',
+        description: null,
+        imageUrl: 'https://app1.restolabs.com/unification/#',
+        createdAt: null,
+        updatedAt: null,
+        isActive: 1,
+        price: 35000,
+        category: {
+          id: 3,
+          name: 'Món rau',
+          description: null,
+          imageUrl:
+            'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/dinner-salad.jpg?itok=hFBGQcxD',
+          createdAt: null,
+          updatedAt: null,
+          isActive: 1,
+        },
+      },
+    ],
+  },
+  {
+    category: {
+      id: 4,
+      name: 'Món pastas',
+      description: null,
+      imageUrl:
+        'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/Fettucine-Alfredo-pasta.jpg?itok=hkvUsR5g',
+      createdAt: null,
+      updatedAt: null,
+      isActive: 1,
+    },
+    foods: [
+      {
+        id: 10,
+        name: 'Spaghetti',
+        description: null,
+        imageUrl:
+          'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/Spaghetti-pasta.jpg?itok=rEuruHY8',
+        createdAt: null,
+        updatedAt: null,
+        isActive: 1,
+        price: 50000,
+        category: {
+          id: 4,
+          name: 'Món pastas',
+          description: null,
+          imageUrl:
+            'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/Fettucine-Alfredo-pasta.jpg?itok=hkvUsR5g',
+          createdAt: null,
+          updatedAt: null,
+          isActive: 1,
+        },
+      },
+      {
+        id: 11,
+        name: 'Penne Alfredo',
+        description: null,
+        imageUrl:
+          'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/Penne-Alfredo-pasta.jpg?itok=DlnpJY7r',
+        createdAt: null,
+        updatedAt: null,
+        isActive: 1,
+        price: 45000,
+        category: {
+          id: 4,
+          name: 'Món pastas',
+          description: null,
+          imageUrl:
+            'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/Fettucine-Alfredo-pasta.jpg?itok=hkvUsR5g',
+          createdAt: null,
+          updatedAt: null,
+          isActive: 1,
+        },
+      },
+      {
+        id: 12,
+        name: 'Mì xào phá lấu',
+        description: null,
+        imageUrl:
+          'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/Fettucine-Alfredo-pasta.jpg?itok=hkvUsR5g',
+        createdAt: null,
+        updatedAt: null,
+        isActive: 1,
+        price: 35000,
+        category: {
+          id: 4,
+          name: 'Món pastas',
+          description: null,
+          imageUrl:
+            'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/Fettucine-Alfredo-pasta.jpg?itok=hkvUsR5g',
+          createdAt: null,
+          updatedAt: null,
+          isActive: 1,
+        },
+      },
+    ],
+  },
+  {
+    category: {
+      id: 5,
+      name: 'Món chiên',
+      description: null,
+      imageUrl:
+        'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/breadsticks.jpg?itok=yIJtxJya',
+      createdAt: null,
+      updatedAt: null,
+      isActive: 1,
+    },
+    foods: [
+      {
+        id: 13,
+        name: 'Chả giò chiên giòn',
+        description: null,
+        imageUrl:
+          'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/garlic-bread.jpg?itok=Oc4njr6n',
+        createdAt: null,
+        updatedAt: null,
+        isActive: 1,
+        price: 12000,
+        category: {
+          id: 5,
+          name: 'Món chiên',
+          description: null,
+          imageUrl:
+            'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/breadsticks.jpg?itok=yIJtxJya',
+          createdAt: null,
+          updatedAt: null,
+          isActive: 1,
+        },
+      },
+      {
+        id: 14,
+        name: 'Xúc xích chiên bột',
+        description: null,
+        imageUrl:
+          'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/mozarella%20sticks.jpg?itok=1aqUCHtX',
+        createdAt: null,
+        updatedAt: null,
+        isActive: 1,
+        price: 20000,
+        category: {
+          id: 5,
+          name: 'Món chiên',
+          description: null,
+          imageUrl:
+            'https://app1.restolabs.com/sites/default/files/styles/food_cafe/public/3318/breadsticks.jpg?itok=yIJtxJya',
+          createdAt: null,
+          updatedAt: null,
+          isActive: 1,
+        },
+      },
+    ],
+  },
+]

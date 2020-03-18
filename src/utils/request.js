@@ -47,7 +47,7 @@ export default function request(options) {
   //   "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token"
   // }
 
-  console.log('===options=' + JSON.stringify(options))
+  // console.log('===options=' + JSON.stringify(options))
   return axios(options)
     .then(response => {
       const { statusText, status, data } = response

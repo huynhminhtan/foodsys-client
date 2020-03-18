@@ -21,9 +21,7 @@ class UserDetail extends PureComponent {
       }
     }
     return (
-      <Page inner>
-        <div className={styles.content}>{content}</div>
-      </Page>
+      <Page inner>{/*<div className={styles.content}>{content}</div>*/}</Page>
     )
   }
 }

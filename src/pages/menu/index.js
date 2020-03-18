@@ -14,7 +14,7 @@ import {
   Card,
   List,
   Avatar,
-  Modal,
+  // Modal,
   Result,
   Input,
   DatePicker,
@@ -28,11 +28,18 @@ import {
   PlusOutlined,
 } from '@ant-design/icons'
 
+import Modal from './components/Modal'
+import FoodModal from './components/FoodModal'
+import { router } from 'utils'
 import { Collapse, Select } from 'antd'
-import { data, data2, data3 } from './datasource'
+import { data, data2, data3, data4 } from './datasource'
 import { Form } from '@ant-design/compatible'
 import moment from 'moment'
 import { connect } from 'dva'
+import Penels from './components/Panels'
+import PropTypes from 'prop-types'
+import User from '../user'
+import { stringify } from 'qs'
 
 const { Paragraph } = Typography
 const { Panel } = Collapse
@@ -58,13 +65,34 @@ class MenuPage extends React.Component {
     this.state = {}
   }
 
+  handleRefresh = newQuery => {
+    const { location } = this.props
+    const { query, pathname } = location
+
+    router.push({
+      pathname,
+      search: stringify(
+        {
+          ...query,
+          ...newQuery,
+        },
+        { arrayFormat: 'repeat' }
+      ),
+    })
+  }
+
   callback = key => {
     console.log(key)
   }
 
   showModal = () => {
-    this.setState({
-      visible: true,
+    const { dispatch } = this.props
+
+    dispatch({
+      type: 'menu/showModal',
+      payload: {
+        modalType: 'create',
+      },
     })
   }
 
@@ -82,9 +110,15 @@ class MenuPage extends React.Component {
     })
   }
 
-  showModal2 = () => {
-    this.setState({
-      visible2: true,
+  showFoodModal = index => {
+    const { dispatch } = this.props
+
+    dispatch({
+      type: 'menu/showFoodModal',
+      payload: {
+        modalType: 'createFood',
+        categoryId: index,
+      },
     })
   }
 
@@ -111,7 +145,63 @@ class MenuPage extends React.Component {
     },
   }
 
+  get modalProps() {
+    const { dispatch, menu, loading } = this.props
+    const { modalVisible, modalType } = menu
+
+    return {
+      visible: modalVisible,
+      destroyOnClose: true,
+      maskClosable: false,
+      confirmLoading: loading.effects[`menu/${modalType}`],
+      title: 'Add Category',
+      centered: true,
+      onOk: data => {
+        dispatch({
+          type: `menu/${modalType}`,
+          payload: data,
+        }).then(() => {
+          this.handleRefresh()
+        })
+      },
+      onCancel() {
+        dispatch({
+          type: 'menu/hideModal',
+        })
+      },
+    }
+  }
+
+  get foodModalProps() {
+    const { dispatch, menu, loading } = this.props
+    const { foodModalVisible, modalType, categoryId } = menu
+
+    return {
+      visible: foodModalVisible,
+      destroyOnClose: true,
+      maskClosable: false,
+      confirmLoading: loading.effects[`menu/${modalType}`],
+      title: 'Add Food',
+      centered: true,
+      onOk: data => {
+        dispatch({
+          type: `menu/${modalType}`,
+          payload: { ...data, categoryId },
+        }).then(() => {
+          this.handleRefresh()
+        })
+      },
+      onCancel() {
+        dispatch({
+          type: 'menu/hideFoodModal',
+        })
+      },
+    }
+  }
+
   render() {
+    const { dispatch, menu, loading } = this.props
+    const { list } = menu
     const nullData = {}
     const {
       form: { getFieldDecorator },
@@ -171,74 +261,74 @@ class MenuPage extends React.Component {
   it can be found as a welcome guest in many households across the world.
 `
 
-    const getModalContent = () => {
-      return (
-        <Form>
-          <FormItem label="Image" {...this.formLayout}>
-            {getFieldDecorator(
-              'title',
-              {}
-            )(
-              <div>
-                <Avatar
-                  style={{
-                    backgroundColor: this.state.color,
-                    verticalAlign: 'middle',
-                    width: '100%',
-                    height: 150,
-                  }}
-                  shape="square"
-                  size="large"
-                >
-                  {this.state.user}
-                </Avatar>
-                <Button
-                  size="small"
-                  style={{ verticalAlign: 'middle' }}
-                  onClick={this.changeUser}
-                >
-                  Upload
-                </Button>
-              </div>
-            )}
-          </FormItem>
-          <FormItem label="Name" {...this.formLayout}>
-            {getFieldDecorator('title', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Input phone please!',
-                },
-              ],
-              initialValue: '',
-            })(<Input placeholder="Input name" />)}
-          </FormItem>
-
-          <FormItem label="Price" {...this.formLayout}>
-            {getFieldDecorator('title', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Input number please!',
-                },
-              ],
-              initialValue: '',
-            })(<Input placeholder="Input price" />)}
-          </FormItem>
-          <FormItem {...this.formLayout} label="Description">
-            {getFieldDecorator('subDescription', {
-              rules: [
-                {
-                  message: 'Input options for reservation please！',
-                  min: 5,
-                },
-              ],
-              initialValue: '',
-            })(<TextArea rows={4} placeholder="Input description" />)}
-          </FormItem>
-        </Form>
-      )
-    }
+    // const getModalContent = () => {
+    //   return (
+    //     <Form>
+    //       <FormItem label="Image" {...this.formLayout}>
+    //         {getFieldDecorator(
+    //           'title',
+    //           {}
+    //         )(
+    //           <div>
+    //             <Avatar
+    //               style={{
+    //                 backgroundColor: this.state.color,
+    //                 verticalAlign: 'middle',
+    //                 width: '100%',
+    //                 height: 150,
+    //               }}
+    //               shape="square"
+    //               size="large"
+    //             >
+    //               {this.state.user}
+    //             </Avatar>
+    //             <Button
+    //               size="small"
+    //               style={{verticalAlign: 'middle'}}
+    //               onClick={this.changeUser}
+    //             >
+    //               Upload
+    //             </Button>
+    //           </div>
+    //         )}
+    //       </FormItem>
+    //       <FormItem label="Name" {...this.formLayout}>
+    //         {getFieldDecorator('title', {
+    //           rules: [
+    //             {
+    //               required: true,
+    //               message: 'Input phone please!',
+    //             },
+    //           ],
+    //           initialValue: '',
+    //         })(<Input placeholder="Input name"/>)}
+    //       </FormItem>
+    //
+    //       <FormItem label="Price" {...this.formLayout}>
+    //         {getFieldDecorator('title', {
+    //           rules: [
+    //             {
+    //               required: true,
+    //               message: 'Input number please!',
+    //             },
+    //           ],
+    //           initialValue: '',
+    //         })(<Input placeholder="Input price"/>)}
+    //       </FormItem>
+    //       <FormItem {...this.formLayout} label="Description">
+    //         {getFieldDecorator('subDescription', {
+    //           rules: [
+    //             {
+    //               message: 'Input options for reservation please！',
+    //               min: 5,
+    //             },
+    //           ],
+    //           initialValue: '',
+    //         })(<TextArea rows={4} placeholder="Input description"/>)}
+    //       </FormItem>
+    //     </Form>
+    //   )
+    // };
 
     return (
       <div>
@@ -257,207 +347,100 @@ class MenuPage extends React.Component {
 
         <Card bordered={false}>
           <Collapse defaultActiveKey={['1']} onChange={this.callback}>
-            <Panel header="Điểm tâm sáng" key="1" extra={genExtra()}>
-              <List
-                grid={{ gutter: 16, column: 4 }}
-                dataSource={[...data, nullData]}
-                renderItem={item => {
-                  if (item && item.name) {
+            {list.map((catAndFood, index) => (
+              <Panel
+                header={catAndFood.category.name}
+                key={index}
+                extra={genExtra()}
+              >
+                <List
+                  grid={{ gutter: 16, column: 4 }}
+                  dataSource={[...catAndFood.foods, nullData]}
+                  renderItem={item => {
+                    if (item && item.name) {
+                      return (
+                        <List.Item>
+                          <Card
+                            hoverable
+                            style={{ width: 240 }}
+                            cover={<img alt={item.name} src={item.imageUrl} />}
+                            actions={[
+                              <a key="edit">Edit</a>,
+                              <a key="remove">Remove</a>,
+                            ]}
+                          >
+                            <Meta
+                              title={item.name}
+                              description={item.description}
+                            />
+                            <br />
+                            <p className={styles.cardPtag}>
+                              <span>Price: </span>
+                              {item.price}đ
+                            </p>
+                          </Card>
+                        </List.Item>
+                      )
+                    }
+
                     return (
                       <List.Item>
-                        <Card
-                          hoverable
-                          style={{ width: 240 }}
-                          cover={<img alt={item.name} src={item.imageUrl} />}
-                          actions={[
-                            <a key="edit">Edit</a>,
-                            <a key="remove">Remove</a>,
-                          ]}
+                        <Button
+                          type="dashed"
+                          className={styles.btnCard}
+                          onClick={() =>
+                            this.showFoodModal(catAndFood.category.id)
+                          }
                         >
-                          <Meta
-                            title={item.name}
-                            description={item.description}
-                          />
-                          <br />
-                          <p className={styles.cardPtag}>
-                            <span>Price: </span>
-                            {item.price}đ
-                          </p>
-                        </Card>
+                          <PlusOutlined /> Add
+                        </Button>
                       </List.Item>
                     )
-                  }
-
-                  return (
-                    <List.Item>
-                      <Button
-                        type="dashed"
-                        className={styles.btnCard}
-                        onClick={this.showModal2}
-                      >
-                        <PlusOutlined /> Add
-                      </Button>
-                      {/*<Card*/}
-                      {/*  hoverable*/}
-                      {/*  style={{width: 240}}*/}
-                      {/*  cover={<img alt={item.name} src={item.imageUrl}/>}*/}
-                      {/*>*/}
-                      {/*  <Meta title={item.name} description={item.description}/>*/}
-                      {/*  <br/>*/}
-                      {/*  <p className={styles.cardPtag}>*/}
-                      {/*    <span>Prixxxxxce: </span>*/}
-                      {/*    {item.price}đ*/}
-                      {/*  </p>*/}
-                      {/*</Card>*/}
-                    </List.Item>
-                  )
-                }}
-              />
-            </Panel>
-            <Panel header="Món nước" key="2" extra={genExtra()}>
-              <List
-                grid={{ gutter: 16, column: 4 }}
-                dataSource={[...data2, nullData]}
-                renderItem={item => {
-                  if (item && item.name) {
-                    return (
-                      <List.Item>
-                        <Card
-                          hoverable
-                          style={{ width: 240 }}
-                          cover={<img alt={item.name} src={item.imageUrl} />}
-                          actions={[
-                            <a key="edit">Edit</a>,
-                            <a key="remove">Remove</a>,
-                          ]}
-                        >
-                          <Meta
-                            title={item.name}
-                            description={item.description}
-                          />
-                          <br />
-                          <p className={styles.cardPtag}>
-                            <span>Price: </span>
-                            {item.price}đ
-                          </p>
-                        </Card>
-                      </List.Item>
-                    )
-                  }
-
-                  return (
-                    <List.Item>
-                      <Button
-                        type="dashed"
-                        className={styles.btnCard}
-                        onClick={this.showModal2}
-                      >
-                        <PlusOutlined /> Add
-                      </Button>
-                      {/*<Card*/}
-                      {/*  hoverable*/}
-                      {/*  style={{width: 240}}*/}
-                      {/*  cover={<img alt={item.name} src={item.imageUrl}/>}*/}
-                      {/*>*/}
-                      {/*  <Meta title={item.name} description={item.description}/>*/}
-                      {/*  <br/>*/}
-                      {/*  <p className={styles.cardPtag}>*/}
-                      {/*    <span>Prixxxxxce: </span>*/}
-                      {/*    {item.price}đ*/}
-                      {/*  </p>*/}
-                      {/*</Card>*/}
-                    </List.Item>
-                  )
-                }}
-              />
-            </Panel>
-            <Panel header="Thức ăn nhanh" key="3" extra={genExtra()}>
-              <List
-                grid={{ gutter: 16, column: 4 }}
-                dataSource={[...data3, nullData]}
-                renderItem={item => {
-                  if (item && item.name) {
-                    return (
-                      <List.Item>
-                        <Card
-                          hoverable
-                          style={{ width: 240 }}
-                          cover={<img alt={item.name} src={item.imageUrl} />}
-                          actions={[
-                            <a key="edit">Edit</a>,
-                            <a key="remove">Remove</a>,
-                          ]}
-                        >
-                          <Meta
-                            title={item.name}
-                            description={item.description}
-                          />
-                          <br />
-                          <p className={styles.cardPtag}>
-                            <span>Price: </span>
-                            {item.price}đ
-                          </p>
-                        </Card>
-                      </List.Item>
-                    )
-                  }
-
-                  return (
-                    <List.Item>
-                      <Button
-                        type="dashed"
-                        className={styles.btnCard}
-                        onClick={this.showModal2}
-                      >
-                        <PlusOutlined /> Add
-                      </Button>
-                      {/*<Card*/}
-                      {/*  hoverable*/}
-                      {/*  style={{width: 240}}*/}
-                      {/*  cover={<img alt={item.name} src={item.imageUrl}/>}*/}
-                      {/*>*/}
-                      {/*  <Meta title={item.name} description={item.description}/>*/}
-                      {/*  <br/>*/}
-                      {/*  <p className={styles.cardPtag}>*/}
-                      {/*    <span>Prixxxxxce: </span>*/}
-                      {/*    {item.price}đ*/}
-                      {/*  </p>*/}
-                      {/*</Card>*/}
-                    </List.Item>
-                  )
-                }}
-              />
-            </Panel>
+                  }}
+                />
+              </Panel>
+            ))}
           </Collapse>
         </Card>
 
-        <Modal
-          title="Add Category"
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-        >
-          {/*<span>dfdf</span>*/}
-          <Input placeholder="Input name of category" />
-        </Modal>
+        {/*<Modal*/}
+        {/*  title="Add Category"*/}
+        {/*  visible={this.state.visible}*/}
+        {/*  onOk={this.handleOk}*/}
+        {/*  onCancel={this.handleCancel}*/}
+        {/*>*/}
+        {/*  <Input placeholder="Input name of category"/>*/}
+        {/*</Modal>*/}
 
-        <Modal
-          title="Add Food"
-          visible={this.state.visible2}
-          onOk={this.handleOk2}
-          onCancel={this.handleCancel2}
-        >
-          {/*<span>dfdf</span>*/}
-          {/*<Input placeholder="Input name of category" />*/}
+        <Modal {...this.modalProps} />
+        <FoodModal {...this.foodModalProps} />
 
-          {getModalContent()}
-        </Modal>
+        {/*<Modal*/}
+        {/*  title="Add Food"*/}
+        {/*  visible={this.state.visible2}*/}
+        {/*  onOk={this.handleOk2}*/}
+        {/*  onCancel={this.handleCancel2}*/}
+        {/*>*/}
+        {/*  /!*<span>dfdf</span>*!/*/}
+        {/*  /!*<Input placeholder="Input name of category" />*!/*/}
+
+        {/*  {getModalContent()}*/}
+        {/*</Modal>*/}
       </div>
     )
   }
 }
 
-export default connect(({ reservation, loading }) => ({
-  reservation,
+MenuPage.propTypes = {
+  menu: PropTypes.object,
+  location: PropTypes.object,
+  dispatch: PropTypes.func,
+  loading: PropTypes.object,
+}
+
+export default connect(({ menu, loading }) => ({
+  menu,
   loading,
 }))(Form.create()(MenuPage))
+
+// export default MenuPage
