@@ -29,5 +29,9 @@ export default {
   queryOrderDetail: 'http://localhost:9080/order/:id/detail',
 
   queryReservationList: 'http://localhost:9080/reservation/all',
+  updateReservationStatus: 'Put http://localhost:9080/reservation/:id',
+  updateReservation: 'POST http://localhost:9080/reservation/add',
+  removeReservation: 'POST http://localhost:9080/reservation/delete',
+
   queryOrderList: 'http://localhost:9080/order',
 }

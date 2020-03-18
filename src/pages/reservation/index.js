@@ -6,6 +6,12 @@ import moment from 'moment'
 import list from './datasource'
 import { DownOutlined, PlusOutlined } from '@ant-design/icons'
 import { Form } from '@ant-design/compatible'
+import { success } from '../../components/Message/Message'
+import {
+  increaseReservationStatus,
+  ReservationStatusEnum,
+  getPercentReservationStatus,
+} from '../../enums/ReservationStatusEnum'
 
 import {
   Avatar,
@@ -26,7 +32,6 @@ import {
 } from 'antd'
 import { connect } from 'dva'
 import PropTypes from 'prop-types'
-import User from '../user'
 
 const FormItem = Form.Item
 
@@ -92,7 +97,7 @@ class Reservation extends React.Component {
         done: true,
       })
       dispatch({
-        type: 'listBasicList/submit',
+        type: 'reservation/updateReservation',
         payload: {
           id,
           ...fieldsValue,
@@ -104,10 +109,27 @@ class Reservation extends React.Component {
   deleteItem = id => {
     const { dispatch } = this.props
     dispatch({
-      type: 'listBasicList/submit',
+      type: 'reservation/delete',
       payload: {
         id,
       },
+    })
+  }
+
+  confirmReservation = (id, status) => {
+    const { dispatch } = this.props
+    dispatch({
+      type: 'reservation/update',
+      payload: {
+        id: id,
+        status: status,
+      },
+    }).then(() => {
+      success('Update Status Reservation #' + id + ' success')
+      dispatch({
+        type: 'reservation/query',
+        payload: { page: 1, pageSize: 10 },
+      })
     })
   }
 
@@ -144,8 +166,8 @@ class Reservation extends React.Component {
       <div className={styles.extraContent}>
         <RadioGroup defaultValue="all">
           <RadioButton value="all">All</RadioButton>
-          <RadioButton value="waiting">Waiting</RadioButton>
           <RadioButton value="confirmed">Confirmed</RadioButton>
+          <RadioButton value="Canceled">Canceled</RadioButton>
         </RadioGroup>
         <Search
           className={styles.extraContentSearch}
@@ -161,7 +183,7 @@ class Reservation extends React.Component {
           onCancel: this.handleDone,
         }
       : {
-          okText: 'Edit',
+          okText: 'Updated',
           onOk: this.handleSubmit,
           onCancel: this.handleCancel,
         }
@@ -174,15 +196,7 @@ class Reservation extends React.Component {
     }
 
     const ListContent = ({
-      data: {
-        userName,
-        createdAt,
-        percent,
-        status,
-        number,
-        isConfirmed,
-        userNameMessenger,
-      },
+      data: { userName, createdAt, percent, status, number, userNameMessenger },
     }) => (
       <div className={styles.listContent}>
         <div className={styles.listContentItem}>
@@ -192,7 +206,7 @@ class Reservation extends React.Component {
 
         <div className={styles.listContentItem}>
           <span>Booking Time</span>
-          <p>{moment(parseInt(createdAt) * 1000).format('DD/MM/YYYY HH:mm')}</p>
+          <p>{moment(parseInt(createdAt)).format('DD/MM/YYYY HH:mm')}</p>
         </div>
 
         <div className={styles.listContentItem}>
@@ -202,8 +216,10 @@ class Reservation extends React.Component {
 
         <div className={styles.listContentItem}>
           <Progress
-            percent={parseInt(isConfirmed) * 100}
-            status={status}
+            percent={getPercentReservationStatus(status)}
+            status={
+              getPercentReservationStatus(status) === 31 ? 'exception' : status
+            }
             strokeWidth={6}
             style={{
               width: 120,
@@ -247,8 +263,32 @@ class Reservation extends React.Component {
 
       return (
         <Form onSubmit={this.handleSubmit}>
-          <FormItem label="User name reservation" {...this.formLayout}>
-            {getFieldDecorator('title', {
+          <FormItem style={{ display: 'none' }} label="" {...this.formLayout}>
+            {getFieldDecorator('userId', {
+              initialValue: current.userId,
+            })(<Input placeholder="Input Name" />)}
+          </FormItem>
+
+          <FormItem style={{ display: 'none' }} label="" {...this.formLayout}>
+            {getFieldDecorator('createdAt', {
+              initialValue: current.createdAt,
+            })(<Input placeholder="Input Name" />)}
+          </FormItem>
+
+          <FormItem style={{ display: 'none' }} label="" {...this.formLayout}>
+            {getFieldDecorator('updatedAt', {
+              initialValue: Date.now(),
+            })(<Input placeholder="Input Name" />)}
+          </FormItem>
+
+          <FormItem style={{ display: 'none' }} label="" {...this.formLayout}>
+            {getFieldDecorator('isActive', {
+              initialValue: current.isActive,
+            })(<Input placeholder="Input Name" />)}
+          </FormItem>
+
+          <FormItem label="User reservation" {...this.formLayout}>
+            {getFieldDecorator('userName', {
               rules: [
                 {
                   required: true,
@@ -259,7 +299,7 @@ class Reservation extends React.Component {
             })(<Input placeholder="Input Name" />)}
           </FormItem>
           <FormItem label="Phone" {...this.formLayout}>
-            {getFieldDecorator('title', {
+            {getFieldDecorator('phone', {
               rules: [
                 {
                   required: true,
@@ -270,7 +310,7 @@ class Reservation extends React.Component {
             })(<Input placeholder="Input Name" />)}
           </FormItem>
           <FormItem label="Number of seats" {...this.formLayout}>
-            {getFieldDecorator('title', {
+            {getFieldDecorator('number', {
               rules: [
                 {
                   required: true,
@@ -278,48 +318,61 @@ class Reservation extends React.Component {
                 },
               ],
               initialValue: current.number,
-            })(<Input placeholder="Input Name" />)}
+            })(<Input placeholder="Input number" />)}
           </FormItem>
-          <FormItem label="Booking time" {...this.formLayout}>
-            {getFieldDecorator('createdAt', {
+          <FormItem label="Booking date" {...this.formLayout}>
+            {getFieldDecorator('reservationsDate', {
               rules: [
                 {
                   required: true,
                   message: '',
                 },
               ],
-              initialValue: current.createdAt
-                ? moment(parseInt(current.createdAt) * 1000)
+              initialValue: current.reservationsDate
+                ? moment(parseInt(current.reservationsDate))
                 : null,
             })(
               <DatePicker
                 showTime
-                placeholder="Input booking time"
-                format="YYYY-MM-DD HH:mm:ss"
+                placeholder="Input booking date"
+                format="DD-MM-YYYY"
                 style={{
                   width: '100%',
                 }}
               />
             )}
           </FormItem>
+          <FormItem label="Booking time" {...this.formLayout}>
+            {getFieldDecorator('reservationsTime', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Input booking time!',
+                },
+              ],
+              initialValue: current.reservationsTime,
+            })(<Input placeholder="Input booking time" />)}
+          </FormItem>
           <FormItem label="Status reservation" {...this.formLayout}>
-            {getFieldDecorator('owner', {
+            {getFieldDecorator('status', {
               rules: [
                 {
                   required: true,
                   message: 'Input status reservation please!',
                 },
               ],
-              initialValue: 'Confirmed',
+              initialValue: current.status,
             })(
-              <Select placeholder="Confirmed">
-                <SelectOption value="confirmed">Confirmed</SelectOption>
-                <SelectOption value="waiting">Waiting</SelectOption>
+              <Select>
+                <SelectOption value="INIT">INIT</SelectOption>
+                <SelectOption value="CONFIRMED">CONFIRMED</SelectOption>
+                <SelectOption value="COMPLETED">COMPLETED</SelectOption>
+                <SelectOption value="CANCELED">CANCELED</SelectOption>
               </Select>
             )}
           </FormItem>
           <FormItem {...this.formLayout} label="Options">
-            {getFieldDecorator('subDescription', {
+            {getFieldDecorator('options', {
               rules: [
                 {
                   message: 'Input options for reservation please！',
@@ -333,24 +386,40 @@ class Reservation extends React.Component {
       )
     }
 
-    console.log('data=' + JSON.stringify(list))
+    // console.log('data=' + JSON.stringify(list))
+
+    function countStatus(list, status) {
+      return list.filter(x => x.status === status).length
+    }
+
+    const totalReservation = list.length
+    const waitingReservation = countStatus(list, 'INIT')
+    const confirmedReservation = countStatus(list, 'CONFIRMED')
+
     return (
       <div>
         <div className={styles.standardList}>
           <Card bordered={false}>
             <Row>
               <Col sm={8} xs={24}>
-                <Info title="Waiting Status" value="8 reservation" bordered />
-              </Col>
-              <Col sm={8} xs={24}>
                 <Info
-                  title="Total reservation"
-                  value="32 reservation"
+                  title="Waiting Status"
+                  value={waitingReservation + ' reservation'}
                   bordered
                 />
               </Col>
               <Col sm={8} xs={24}>
-                <Info title="Confirmed" value="24 reservation" />
+                <Info
+                  title="Total reservation"
+                  value={totalReservation + ' reservation'}
+                  bordered
+                />
+              </Col>
+              <Col sm={8} xs={24}>
+                <Info
+                  title="Confirmed"
+                  value={confirmedReservation + ' reservation'}
+                />
               </Col>
             </Row>
           </Card>
@@ -387,7 +456,8 @@ class Reservation extends React.Component {
                             'Are you sure you want to confirm this reservation?',
                           okText: 'Confirm',
                           cancelText: 'Cancel',
-                          // onOk: () => this.deleteItem(currentItem.id),
+                          onOk: () =>
+                            this.confirmReservation(item.id, 'CONFIRMED'),
                         })
                       }}
                     >
