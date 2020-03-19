@@ -9,6 +9,7 @@ const {
   updateReservation,
   removeReservation,
   queryPromotionList,
+  addPromotion,
 } = api
 
 export default modelExtend(pageModel, {
@@ -53,19 +54,24 @@ export default modelExtend(pageModel, {
         })
       }
     },
-    // *update({ payload }, { select, call, put }) {
-    //   console.log('=payload==updateReservationStatus====')
-    //   console.log(payload)
-    //   const data = yield call(updateReservationStatus, payload)
-    //   if (data.success) {
-    //     // yield put({type: 'hideModal'})
-    //     console.log('updateReservationStatus= ' + JSON.stringify(data))
-    //   } else {
-    //     throw data
-    //   }
-    // },
 
-    // *updateReservation({ payload }, { select, call, put }) {
+    *create({ payload }, { select, call, put }) {
+      const availableFrom = payload.availableFrom.valueOf()
+      const availableTo = payload.availableTo.valueOf()
+      const promotionData = { ...payload, availableFrom, availableTo }
+      console.log('=addPromotion====')
+      console.log(promotionData)
+
+      const data = yield call(addPromotion, promotionData)
+      if (data.success) {
+        yield put({ type: 'query', payload: {} })
+        console.log('addPromotion= ' + JSON.stringify(data))
+      } else {
+        throw data
+      }
+    },
+
+    // *create({ payload }, { select, call, put }) {
     //   console.log('=updateReservation====')
     //   const reservationsDate = payload.reservationsDate.valueOf()
     //   const reservationData = { ...payload, reservationsDate }

@@ -36,4 +36,5 @@ export default {
   queryOrderList: 'http://localhost:9080/order',
 
   queryPromotionList: 'http://localhost:9080/promotion/all',
+  addPromotion: 'POST http://localhost:9080/promotion/add',
 }
