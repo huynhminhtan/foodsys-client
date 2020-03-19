@@ -33,6 +33,7 @@ import data from './datasource'
 import { Form } from '@ant-design/compatible'
 import moment from 'moment'
 import { connect } from 'dva'
+import PropTypes from 'prop-types'
 
 const { Paragraph } = Typography
 const { Panel } = Collapse
@@ -112,6 +113,8 @@ class PromotionPage extends React.Component {
   }
 
   render() {
+    const { dispatch, promotion, loading } = this.props
+    const { list, pagination, selectedRowKeys } = promotion
     const nullData = {}
     const {
       form: { getFieldDecorator },
@@ -283,70 +286,71 @@ class PromotionPage extends React.Component {
         <Card bordered={false}>
           <List
             grid={{ gutter: 16, column: 3 }}
-            dataSource={[...data]}
+            // dataSource={[...data]}
+            dataSource={list}
             renderItem={item => {
-              if (item && item.name) {
-                return (
-                  <List.Item>
-                    <Card
-                      hoverable
-                      style={{ width: 340 }}
-                      cover={<img alt={item.name} src={item.imageUrl} />}
-                      actions={[
-                        <a key="edit">Edit</a>,
-                        <a key="remove">Remove</a>,
-                      ]}
-                    >
-                      <Meta title={item.name} description={item.description} />
-                      <br />
-                      <p className={styles.cardPtag}>
-                        <span>Code: </span>
-                        {item.code}
-                      </p>
-                      <p className={styles.cardPtag}>
-                        <span>Precent down: </span>
-                        {item.precentDown}%
-                      </p>
-                      <p className={styles.cardPtag}>
-                        <span>Available from: </span>
-                        {moment(parseInt(item.availableFrom)).format(
-                          'DD/MM/YYYY HH:mm'
-                        )}
-                      </p>
-                      <p className={styles.cardPtag}>
-                        <span>Available to: </span>
-                        {moment(parseInt(item.availableTo)).format(
-                          'DD/MM/YYYY HH:mm'
-                        )}
-                      </p>
-                    </Card>
-                  </List.Item>
-                )
-              }
-
+              // if (item && item.name) {
               return (
                 <List.Item>
-                  <Button
-                    type="dashed"
-                    className={styles.btnCard}
-                    onClick={this.showModal2}
+                  <Card
+                    hoverable
+                    style={{ width: 340 }}
+                    cover={<img alt={item.title} src={item.imageUrl} />}
+                    actions={[
+                      <a key="edit">Edit</a>,
+                      <a key="remove">Remove</a>,
+                    ]}
                   >
-                    <PlusOutlined /> Add
-                  </Button>
-                  {/*<Card*/}
-                  {/*  hoverable*/}
-                  {/*  style={{width: 240}}*/}
-                  {/*  cover={<img alt={item.name} src={item.imageUrl}/>}*/}
-                  {/*>*/}
-                  {/*  <Meta title={item.name} description={item.description}/>*/}
-                  {/*  <br/>*/}
-                  {/*  <p className={styles.cardPtag}>*/}
-                  {/*    <span>Prixxxxxce: </span>*/}
-                  {/*    {item.price}đ*/}
-                  {/*  </p>*/}
-                  {/*</Card>*/}
+                    <Meta title={item.title} description={item.content} />
+                    <br />
+                    <p className={styles.cardPtag}>
+                      <span>Code: </span>
+                      {item.code}
+                    </p>
+                    <p className={styles.cardPtag}>
+                      <span>Precent down: </span>
+                      {item.percentDown}%
+                    </p>
+                    <p className={styles.cardPtag}>
+                      <span>Available from: </span>
+                      {moment(parseInt(item.availableFrom)).format(
+                        'DD/MM/YYYY HH:mm'
+                      )}
+                    </p>
+                    <p className={styles.cardPtag}>
+                      <span>Available to: </span>
+                      {moment(parseInt(item.availableTo)).format(
+                        'DD/MM/YYYY HH:mm'
+                      )}
+                    </p>
+                  </Card>
                 </List.Item>
               )
+              // }
+
+              // return (
+              //   <List.Item>
+              //     <Button
+              //       type="dashed"
+              //       className={styles.btnCard}
+              //       onClick={this.showModal2}
+              //     >
+              //       <PlusOutlined /> Add
+              //     </Button>
+              //     {/*<Card*/}
+              //     {/*  hoverable*/}
+              //     {/*  style={{width: 240}}*/}
+              //     {/*  cover={<img alt={item.name} src={item.imageUrl}/>}*/}
+              //     {/*>*/}
+              //     {/*  <Meta title={item.name} description={item.description}/>*/}
+              //     {/*  <br/>*/}
+              //     {/*  <p className={styles.cardPtag}>*/}
+              //     {/*    <span>Prixxxxxce: </span>*/}
+              //     {/*    {item.price}đ*/}
+              //     {/*  </p>*/}
+              //     {/*</Card>*/}
+              //   </List.Item>
+              // )
             }}
           />
         </Card>
@@ -377,7 +381,14 @@ class PromotionPage extends React.Component {
   }
 }
 
-export default connect(({ reservation, loading }) => ({
-  reservation,
+PromotionPage.propTypes = {
+  reservation: PropTypes.object,
+  location: PropTypes.object,
+  dispatch: PropTypes.func,
+  loading: PropTypes.object,
+}
+
+export default connect(({ promotion, loading }) => ({
+  promotion,
   loading,
 }))(Form.create()(PromotionPage))

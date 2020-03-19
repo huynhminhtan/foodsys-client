@@ -34,4 +34,6 @@ export default {
   removeReservation: 'POST http://localhost:9080/reservation/delete',
 
   queryOrderList: 'http://localhost:9080/order',
+
+  queryPromotionList: 'http://localhost:9080/promotion/all',
 }
